@@ -1,0 +1,55 @@
+.earnings {
+  padding: 20px;
+}
+
+.earnings h2 {
+  margin-bottom: 15px;
+  font-size: 20px;
+}
+
+.table-container {
+  overflow-x: auto; /* Scroll on small screens */
+  background: #fff;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+}
+
+.sales-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.sales-table th,
+.sales-table td {
+  padding: 12px;
+  border-bottom: 1px solid #eee;
+  text-align: left;
+  font-size: 14px;
+}
+
+.sales-table th {
+  background-color: #f9f9f9;
+  font-weight: bold;
+}
+
+.status.completed {
+  color: green;
+  font-weight: bold;
+}
+
+.status.pending {
+  color: orange;
+  font-weight: bold;
+}
+
+/* Responsive text size */
+@media (max-width: 768px) {
+  .earnings h2 {
+    font-size: 18px;
+  }
+  .sales-table th,
+  .sales-table td {
+    font-size: 12px;
+    padding: 8px;
+  }
+}

@@ -1,0 +1,288 @@
+.hero-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 20px;
+  text-align: center;
+  gap: 30px;
+}
+
+.hero-section div p:first-child {
+  background-color: #f0f0f0; /* light grey */
+  display: inline-block;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+.hero-section div p:nth-child(2) {
+  font-size: 24px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.hero-section div p:nth-child(3) {
+  font-size: 16px;
+  color: #555;
+  max-width: 600px;
+  line-height: 1.6;
+  margin: 0 auto;
+}
+
+.hero-section div button {
+  background-color: black;
+  color: white;
+  padding: 14px 28px;
+  font-size: 16px;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+}
+
+.hero-section div button:hover {
+  opacity: 0.85;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .hero-section div p:nth-child(2) {
+    font-size: 20px;
+  }
+  
+  .hero-section div p:nth-child(3) {
+    font-size: 14px;
+    max-width: 90%;
+  }
+  
+  .hero-section div button {
+    padding: 12px 24px;
+    font-size: 14px;
+  }
+  .steps {
+    flex-direction: column;
+    gap: 40px;
+  }
+  .stories-container {
+    flex-direction: column;
+    align-items: center;
+  }
+}
+.how-it-works {
+  background-color: #f5f5f5;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.how-it-works h2 {
+  font-size: 22px;
+  margin-bottom: 50px;
+  font-weight: bold;
+}
+
+.steps {
+  display: flex;
+  justify-content: space-between;
+  gap: 30px;
+  flex-wrap: wrap;
+}
+
+.step {
+  flex: 1;
+  min-width: 250px;
+  background-color: white;
+  padding: 30px 20px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 20px;
+}
+
+.step .icon {
+  background-color: black;
+  color: white;
+  font-size: 28px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.step h3 {
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.step p {
+  font-size: 16px;
+  color: #555;
+  line-height: 1.5;
+}
+
+.success-stories {
+  background-color: #ffffff;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.success-stories h2 {
+  font-size: 22px;
+  margin-bottom: 40px;
+}
+
+.stories-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+}
+
+.story-card {
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 20px;
+  max-width: 300px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+
+}
+
+.story-image {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  object-fit: cover;
+  margin-bottom: 15px;
+}
+
+.story-name {
+  font-size: 1.2rem;
+  margin: 5px 0;
+}
+
+.story-job {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 15px;
+}
+
+.story-text {
+  font-size: 0.95rem;
+  color: #333;
+  line-height: 1.4;
+}
+
+.home-stats-container {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  padding: 60px 20px;
+  background-color: #f5f5f5;
+  flex-wrap: wrap;
+  gap: 30px;
+}
+
+.stat-card {
+  text-align: center;
+}
+
+.stat-value {
+  font-size: 32px;
+  font-weight: bold;
+  color: black;
+}
+
+.stat-label {
+  font-size: 16px;
+  color: #555;
+}
+
+@media (max-width: 768px) {
+  .stats-container {
+    flex-direction: column;
+  }
+  .stat-value {
+    font-size: 28px;
+  }
+  .stat-label {
+    font-size: 14px;
+  }
+}
+.earning-section {
+  background: #ffffff; /* black theme */
+  color: #000000;
+  text-align: center;
+  padding: 60px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.earning-section p:first-child {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.earning-section p:nth-child(2) {
+  font-size: 1.1rem;
+  color: #000000;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.earning-section button {
+  background: #000000;
+  color: #ffffff;
+  border: none;
+  padding: 10px 10px 10px 10px;
+  border-radius: 6px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.earning-section button:hover {
+  background: #2a2828;
+  color: white;
+}
+
+.earning-section p:last-child {
+  font-size: 0.95rem;
+  color: #000000;
+}
+
+.earning-section p:last-child span {
+  color: #000000;
+  font-weight: bold;
+  margin-left: 6px;
+  cursor: pointer;
+  text-decoration: underline;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .earning-section p:first-child {
+    font-size: 1.6rem;
+  }
+
+  .earning-section p:nth-child(2) {
+    font-size: 1rem;
+  }
+
+  .earning-section button {
+    width: 100%;
+    max-width: 300px;
+  }
+}
+

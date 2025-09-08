@@ -1,0 +1,175 @@
+.signup-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.signup-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.signup-subtitle {
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.signup-subtitle .highlight {
+  background: #d4f8d4; /* light green background */
+  padding: 3px 8px;
+  border-radius: 5px;
+  font-weight: 500;
+}
+
+.signup-container {
+  width: 100%;
+  max-width: 400px;
+  background: #fff;
+  padding: 25px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0,0,0,0.05);
+}
+
+.input-group {
+  position: relative;
+  margin-bottom: 20px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px 40px 12px 40px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  font-size: 14px;
+}
+
+.input-icon {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #888;
+}
+
+.signup-btn {
+  width: 100%;
+  background: black;
+  color: white;
+  border: none;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+
+.signup-btn:hover {
+  opacity: 0.9;
+}
+
+/* Creator Benefits */
+.creator-benefits {
+  text-align: left;
+  margin: 20px 0;
+  font-size: 14px;
+  color: #333;
+}
+
+.creator-benefits h4 {
+  margin-bottom: 8px;
+  font-size: 15px;
+}
+
+.creator-benefits p {
+  display: flex;
+  align-items: center;
+  margin: 5px 0;
+}
+
+.check-icon {
+  color: #28a745; /* green check */
+  margin-right: 8px;
+}
+
+/* Agreement */
+.agreement {
+  font-size: 12px;
+  color: #555;
+  margin-top: 15px;
+}
+
+.agreement a {
+  color: black;
+  text-decoration: underline;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .signup-title {
+    font-size: 20px;
+  }
+
+  .signup-subtitle {
+    font-size: 13px;
+  }
+
+  .signup-container {
+    padding: 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .signup-title {
+    font-size: 18px;
+  }
+
+  .signup-subtitle {
+    font-size: 12px;
+  }
+
+  .input-group input {
+    font-size: 13px;
+    padding: 10px 35px 10px 35px;
+  }
+}
+.switch-auth {
+  margin-top: 10px;
+  font-size: 13px;
+  color: #555;
+}
+
+.switch-auth a {
+  color: black;
+  font-weight: 500;
+  text-decoration: underline;
+}
+.password-strength {
+  margin-top: 5px;
+  font-size: 13px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+.password-strength.weak {
+  color: red;
+}
+
+.password-strength.medium {
+  color: orange;
+}
+
+.password-strength.strong {
+  color: green;
+}
