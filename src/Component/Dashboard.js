@@ -9,16 +9,18 @@ import WithdrawalTab from "./WithdrawalTab";
 import ProfileTab from "./ProfileTab";
 
 const tabs = [
-  { name: "Dashboard", icon: <FaTachometerAlt />, component: <DashboardHome /> },
-  { name: "Content", icon: <FaFolder />, component: <ContentTab /> },
-  { name: "Earnings", icon: <FaMoneyBill />, component: <EarningTab /> },
-  { name: "Withdrawal", icon: <FaWallet />, component: <WithdrawalTab /> },
-  { name: "Profile", icon: <FaUser />, component: <ProfileTab /> },
+  { name: "Dashboard", icon: <FaTachometerAlt />, component: DashboardHome  },
+  { name: "Content", icon: <FaFolder />, component: ContentTab },
+  { name: "Earnings", icon: <FaMoneyBill />, component: EarningTab  },
+  { name: "Withdrawal", icon: <FaWallet />, component: WithdrawalTab  },
+  { name: "Profile", icon: <FaUser />, component: ProfileTab },
 ];
 
 const Dashboard = () => {
   const [activeTab, setActiveTab] = useState("Dashboard");
   const currentTab = tabs.find((tab) => tab.name === activeTab);
+
+  const CurrentComponent = currentTab.component;
 
   return (
     <div className="dashboard-container">
@@ -35,7 +37,10 @@ const Dashboard = () => {
         ))}
       </div>
 
-      <div className="dashboard-content">{currentTab.component}</div>
+      <div className="dashboard-content">
+        {/* Pass setActiveTab to any tab that needs it */}
+        <CurrentComponent setActiveTab={setActiveTab} />
+      </div>
     </div>
   );
 };

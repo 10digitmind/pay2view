@@ -1,6 +1,6 @@
 // src/redux/slices/authSlice.js
 import { createSlice,} from '@reduxjs/toolkit';
-import { loginUser,createUser } from '../Redux/Asyncthunk';
+import { loginUser,createUser,getCurrentUser } from '../Redux/Asyncthunk';
 
 // Login API call
 
@@ -27,7 +27,7 @@ const authSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload.user;
+        state.user = action.payload;
         state.token = action.payload.token;
       })
       .addCase(loginUser.rejected, (state, action) => {
@@ -48,10 +48,22 @@ const authSlice = createSlice({
       .addCase(createUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
+      })
+//get user profile
+
+       .addCase(getCurrentUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(getCurrentUser.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+        state.token = action.payload.token;
+      })
+      .addCase(getCurrentUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
       });
-
-
-    
   },
   
 });

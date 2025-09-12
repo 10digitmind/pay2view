@@ -39,7 +39,7 @@ export default function Homepage() {
     <div>
         <p>🚀 Join 10,000+ Creators</p>
              <p>Turn Your Content Into Cash Instantly</p>
-                  <p>Creators on Pay2View are already earning by sharing exclusive photos and videos. Start monetizing your creativity today.</p>
+                  <p>Creators on Pay2View are already earning by sharing exclusive PHOTOS, VIDEOS and PDF . Start monetizing your creativity today.</p>
                  
     </div>
     <div>

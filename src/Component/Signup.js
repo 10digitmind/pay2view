@@ -10,15 +10,19 @@ import "../Styles/Signup.css";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { createUser } from "../Redux/Asyncthunk";
+import { toast } from 'react-toastify';
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const dispatch = useDispatch();
-  
+  const navigate = useNavigate()
 
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
+const [loading, setLoading] = useState(false);
+const [error, setError] = useState(null);
 
 
   const togglePassword = () => setShowPassword(!showPassword);
@@ -34,15 +38,50 @@ const SignUp = () => {
     return "Medium";
   };
 
-  const handleSignUp = async () => {
-    if (!email && !password) {
-     
-      return;
-    } else {
-      await dispatch(createUser({ email, password }));
-     
+ const handleSignUp = async () => {
+
+  if (!navigator.onLine) {
+  toast.error("No internet connection. Please check your network.");
+  return;
+}
+
+  if (!email || !password) {
+    toast.error("Please input email and password");
+    return;
+  }
+
+  setLoading(true);
+  setError(null);
+
+  try {
+    // Optional: handle network timeout
+    const controller = new AbortController();
+    const timeout = setTimeout(() => {
+      controller.abort();
+    }, 10000); // 10 seconds
+
+    const resultAction = await dispatch(createUser({ email, password, signal: controller.signal })).unwrap();
+
+    clearTimeout(timeout);
+
+    if (resultAction?._id) {
+      toast.success("Registration successful! Please check your email to verify.");
+      setTimeout(() => {
+        navigate(`/email-verification-sent/${email}`);
+      }, 200);
     }
-  };
+  } catch (err) {
+    if (err.name === "AbortError") {
+      toast.error("Network is slow. Please try again.");
+    } else {
+      toast.error(err?.message || "Sign-up failed. Please try again.");
+    }
+    setError(err);
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   const strength = getPasswordStrength(password);
   return (
@@ -81,9 +120,10 @@ const SignUp = () => {
         )}
       
 
-        <button onClick={handleSignUp} className="signup-btn">
-          Create Account
-        </button>
+  <button onClick={handleSignUp} className="signup-btn" disabled={loading}>
+  {loading ? "Signing up..." : "Sign Up"}
+</button>
+
         <p className="switch-auth">
           Already have an account? <Link to="/login">Login</Link>
         </p>

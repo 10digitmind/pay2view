@@ -1,24 +1,89 @@
 import { useState } from "react";
 import { FaEnvelope, FaLock, FaEye, FaEyeSlash } from "react-icons/fa";
 import "../Styles/Login.css";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { toast } from "react-toastify";
+import { loginUser } from "../Redux/Asyncthunk";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
+  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState('');
+  const [loading, setLoading]= useState(false)
+  const [error, setError] = useState(null);
 
   const togglePassword = () => setShowPassword(!showPassword);
-   const { user } = useSelector((state) => state.auth);
+
+
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+const handleLogin = async () => {
+
+  if (!navigator.onLine) {
+  toast.error("No internet connection. Please check your network.");
+  return;
+}
+  if (!email || !password) {
+    return toast.error("Please input your email and password");
+  }
+
+  setLoading(true);
+  setError(null);
+
+  try {
+    // Optional: set a timeout for slow networks
+    const controller = new AbortController();
+    const timeout = setTimeout(() => {
+      controller.abort();
+    }, 10000); // 10 seconds timeout
+
+    const result = await dispatch(
+      loginUser({ email, password, signal: controller.signal })
+    ).unwrap();
+
+    clearTimeout(timeout);
+
+    if (result?.token) {
+      localStorage.setItem("authToken", result.token);
+      toast.success("Login successful!");
+      navigate("/dashboard");
+    }
+  } catch (err) {
+    if (err.name === "AbortError") {
+      toast.error("Network is slow. Please try again.");
+    } else if (err === "Email not verified") {
+      toast.error("Please verify your email before logging in.");
+      navigate(`/email-verification-sent/${email}`);
+    } else {
+      toast.error(err?.message || "Login failed. Please try again.");
+    }
+    setError(err);
+  } finally {
+    setLoading(false);
+  }
+};
+
 
   return (
     <div className="login-page">
       <h2 className="login-title">Sign in to your Pay2View account</h2>
-      <p className="login-subtitle">Access your account and continue your journey</p>
+      <p className="login-subtitle">
+        Access your account and continue your journey
+      </p>
 
       <div className="login-container">
         {/* Email Input */}
         <div className="input-group">
           <FaEnvelope className="input-icon" />
-          <input type="email" placeholder="Your@email.com" />
+          <input
+    value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            type="email"
+            placeholder="Your@email.com"
+          />
         </div>
 
         {/* Password Input */}
@@ -27,6 +92,9 @@ const Login = () => {
           <input
             type={showPassword ? "text" : "password"}
             placeholder="Enter Your Password"
+            onChange={(e) => setPassword(e.target.value)}
+            value={password}
+       
           />
           <span className="toggle-password" onClick={togglePassword}>
             {showPassword ? <FaEyeSlash /> : <FaEye />}
@@ -40,7 +108,9 @@ const Login = () => {
           </p>
         </div>
 
-        <button className="login-btn">Login</button>
+ <button onClick={handleLogin} className="login-btn" disabled={loading}>
+  {loading ? "Logging in..." : "Login"}
+</button>
       </div>
 
       {/* Security Badges */}

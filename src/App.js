@@ -11,6 +11,11 @@ import { useState,useEffect} from 'react';
 import SplashScreen from './Component/SplashScreen';
 import logo from '../src/Image/pay2view.png'
 import Dashboard from './Component/Dashboard';
+import { ToastContainer } from 'react-toastify';
+import VerifyEmailPage from './Component/VerifyEmailPage';
+import EmailVerificationLanding from './Component/EmailVerificationLanding';
+import AuthRoute from './Component/AuthRoute';
+
 
 
 function App() {
@@ -43,13 +48,21 @@ function App() {
 
   return (
     <Router>
+         <ToastContainer position="top-right" autoClose={3000} />
       <Header />
       <Routes>
+      
         <Route path="/home" element={<Homepage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/getstarted" element={<SignUp />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
+             <Route path="/email-verification-sent/:email" element={<VerifyEmailPage />} />
+     <Route path="/verify-email" element={<EmailVerificationLanding />} />
+               <Route element={<AuthRoute />}>
     <Route path="/dashboard" element={<Dashboard />} />
+
+    </Route>
+
       </Routes>
       <Footer />
     </Router>

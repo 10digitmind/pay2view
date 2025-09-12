@@ -1,9 +1,11 @@
 import React from 'react'
 import { useState } from 'react';
 import '../Styles/Profile.css'
+import { useSelector } from 'react-redux';
 
 export default function ProfileTab() {
  const [editMode, setEditMode] = useState(false);
+   const { user} = useSelector((state) => state.auth)
   const [profile, setProfile] = useState({
     fullName: "John Doe",
     username: "johndoe",
@@ -72,7 +74,7 @@ export default function ProfileTab() {
             <input
               type="text"
               name="username"
-              value={form.username}
+              value={user?.username}
               onChange={handleChange}
             />
 
@@ -99,7 +101,7 @@ export default function ProfileTab() {
               <strong>Full Name:</strong> {profile.fullName}
             </p>
             <p>
-              <strong>Username:</strong> {profile.username}
+              <strong>Username:</strong> {user?.username}
             </p>
             <p>
               <strong>Email:</strong> {profile.email}

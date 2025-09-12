@@ -1,8 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { FaWallet, FaFileAlt, FaDollarSign, FaUpload, FaClock } from "react-icons/fa";
 import "../Styles/Dashboardhome.css";
+import { useDispatch } from "react-redux";
+import { getCurrentUser } from "../Redux/Asyncthunk";
+import { useNavigate } from "react-router-dom";
 
-const DashboardHome = () => {
+const DashboardHome = ({setActiveTab}) => {
+  const dispatch = useDispatch()
+  const token = localStorage.getItem('authToken')
+  const navigate = useNavigate()
+
+  useEffect(()=>{
+    if(token){
+  dispatch(getCurrentUser())
+    }
+
+  },)
   return (
     <div className="dashboard-home">
       {/* Alert Badge */}
@@ -20,7 +33,7 @@ const DashboardHome = () => {
     <p className="ready-text">💡 Ready to withdraw your funds?</p>
   </div>
 <div className="withdraw-con-btn">
-  <button className="withdraw-btn">
+  <button  onClick={() => setActiveTab("Withdrawal")} className="withdraw-btn">
     <FaWallet className="wallet-icon" /> Withdraw Now
   </button>
 </div>

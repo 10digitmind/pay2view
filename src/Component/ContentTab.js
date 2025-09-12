@@ -69,8 +69,8 @@ const [menuOpen, setMenuOpen] = useState(null);
               <FaEllipsisV
                 className="menu-icon"
                 onClick={() => toggleMenu(item.id)}
-                color='black'
-               size={20}
+                color='green'
+               size={22}
               />
               {menuOpen === item.id && (
                 <div className="menu-dropdown">
