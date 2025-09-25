@@ -15,15 +15,25 @@ import { ToastContainer } from 'react-toastify';
 import VerifyEmailPage from './Component/VerifyEmailPage';
 import EmailVerificationLanding from './Component/EmailVerificationLanding';
 import AuthRoute from './Component/AuthRoute';
+import UploadContent from './Component/UploadContent';
+import ViewContent from './Component/ViewContent';
+import PaymentVerification from './Component/PaymentVerification';
+import ResetPassword from './Component/ResetPassword';
+import { useDispatch } from 'react-redux';
+import { logout } from './Redux/AuthSlice';
+import { useNavigate } from 'react-router-dom';
+import AutoLogoutHandler from './utils/AutoLogOutHandler';
+import GuestRoute from './Component/GuestRoute';
 
 
 
 function App() {
   const [showSplash, setShowSplash] = useState(false);
+const dispatch = useDispatch()
 
   useEffect(() => {
     const hasSeenSplash = localStorage.getItem("hasSeenSplash");
-
+console.log('ENV',process.env.REACT_APP_API_URL)
     if (!hasSeenSplash) {
       // Show splash only on the very first visit
       setShowSplash(true);
@@ -36,6 +46,7 @@ function App() {
       return () => clearTimeout(timer);
     }
   }, []);
+
 
   if (showSplash) {
     return (
@@ -50,16 +61,24 @@ function App() {
     <Router>
          <ToastContainer position="top-right" autoClose={3000} />
       <Header />
+        <AutoLogoutHandler/>
       <Routes>
-      
-        <Route path="/home" element={<Homepage />} />
+    
+    <Route element={<GuestRoute/>}>
         <Route path="/login" element={<Login />} />
         <Route path="/getstarted" element={<SignUp />} />
         <Route path="/forgot-password" element={<ForgotPassword />} />
              <Route path="/email-verification-sent/:email" element={<VerifyEmailPage />} />
      <Route path="/verify-email" element={<EmailVerificationLanding />} />
+   
+        <Route path="/reset-password/:token" element={<ResetPassword />} />
+         </Route>
+ <Route path="/view-content/:title/:id" element={<ViewContent />} />
+     <Route path="/payment-verification/:reference" element={<PaymentVerification />} />
+    <Route path="/" element={<Homepage />} />
                <Route element={<AuthRoute />}>
     <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/uplaod-content" element={<UploadContent />} />
 
     </Route>
 

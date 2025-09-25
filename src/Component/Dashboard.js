@@ -8,12 +8,14 @@ import EarningTab from "./EarningTab";
 import WithdrawalTab from "./WithdrawalTab";
 import ProfileTab from "./ProfileTab";
 
+
 const tabs = [
   { name: "Dashboard", icon: <FaTachometerAlt />, component: DashboardHome  },
   { name: "Content", icon: <FaFolder />, component: ContentTab },
   { name: "Earnings", icon: <FaMoneyBill />, component: EarningTab  },
   { name: "Withdrawal", icon: <FaWallet />, component: WithdrawalTab  },
   { name: "Profile", icon: <FaUser />, component: ProfileTab },
+
 ];
 
 const Dashboard = () => {

@@ -6,6 +6,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { getCurrentUser } from "../Redux/Asyncthunk";
 
+const API_URL =process.env.REACT_APP_API_URL 
 const EmailVerificationLanding = () => {
   const [status, setStatus] = useState("loading"); // loading | success | error
   const [message, setMessage] = useState("");
@@ -24,7 +25,7 @@ const dispatch = useDispatch()
         setMessage("Invalid verification link.");
         return;
       }
-       const API_URL = "http://localhost:5000/api";
+     
       try {
         const res = await axios.post(`${API_URL}/verify-email?token=${token}`);
         console.log(res)
@@ -34,7 +35,9 @@ const dispatch = useDispatch()
  await dispatch(getCurrentUser())
         // Store JWT for login
         if (res.data.token) localStorage.setItem("authToken", res.data.token);
-
+        const now = Date.now()
+ const expiresAt = now + 24 * 60 *60 * 1000; 
+        localStorage.setItem("expiresAt", expiresAt);
         // Optional: redirect after 3 seconds
         setTimeout(() => navigate("/dashboard"), 3000);
       } catch (err) {

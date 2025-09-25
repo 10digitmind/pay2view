@@ -1,32 +1,81 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react';
 import '../Styles/Withdrawal.css'
+import axios from 'axios'; 
+import { toast } from 'react-toastify';
+import { useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { getWithdrawalHistory } from '../Redux/Asyncthunk';
 
+const token = localStorage.getItem("authToken")
+const API_URL =process.env.REACT_APP_API_URL 
 export default function WithdrawalTab() {
    const [form, setForm] = useState({
     amount: "",
-    bank: "",
+    bankName: "",
     accountName: "",
+    accountNumber:""
+
   });
 
-  const [history] = useState([
-    { id: 1, amount: "₦50,000", bank: "GTBank", date: "2025-08-20", status: "Completed" },
-    { id: 2, amount: "₦15,000", bank: "Access Bank", date: "2025-08-25", status: "Pending" },
-  ]);
+  const [loading,setLoading] = useState(false)
+const { withdrawalsHistory } = useSelector((state) => state.auth);
+
+
+
+
+
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    alert(`Withdrawal requested: ₦${form.amount} to ${form.bank}`);
-    setForm({ amount: "", bank: "", accountName: "" });
-  };
+const handleSubmit = async (e) => {
+  e.preventDefault();
+ setLoading(true);
+  try {
+    const response = await axios.post(
+      `${API_URL}/request-withdrawals`,
+      {
+        bankName: form.bankName,
+        accountName: form.accountName,
+        accountNumber: form.accountNumber,
+        amount: form.amount,
+      },
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`, // if JWT stored in localStorage
+        },
+      }
+    );
+
+    // Axios automatically parses JSON, so you can access response.data directly
+    const data = response.data;
+
+    toast.success(data.message || "Withdrawal request submitted successfully");
+
+    setForm({ amount: "", bankName: "", accountName: "", accountNumber: "" });
+  } catch (error) {
+    console.error("Withdrawal error:", error);
+    setForm({ amount: "", bankName: "", accountName: "", accountNumber: "" });
+setLoading(false)
+    // Handle API error message if available
+    const message =
+      error.response?.data?.message || "Server error. Please try again later.";
+
+    toast.error(message);
+  }finally{
+    setLoading(false)
+  }
+};
+
+
+
 
   return (
     <div className="withdrawal">
-      {/* Request Withdrawal */}
+      {/* Request Withdrawal */}.
       <div className="withdrawal-request">
         <h2>Request Withdrawal</h2>
         <form onSubmit={handleSubmit}>
@@ -35,7 +84,7 @@ export default function WithdrawalTab() {
             <input
               type="number"
               name="amount"
-              value={form.amount}
+              value={(form.amount.toLocaleLowerCase())}
               onChange={handleChange}
               placeholder="Enter amount"
               required
@@ -45,8 +94,8 @@ export default function WithdrawalTab() {
             <label>Bank Name</label>
             <input
               type="text"
-              name="bank"
-              value={form.bank}
+              name="bankName"
+              value={form.bankName}
               onChange={handleChange}
               placeholder="Enter bank name"
               required
@@ -63,44 +112,61 @@ export default function WithdrawalTab() {
               required
             />
           </div>
-          <button type="submit" className="withdrawal-btn">
-            Request Withdrawal
+            <div className="form-group">
+            <label>Account Number</label>
+            <input
+              type="number"
+              name="accountNumber"
+              value={form.accountNumber}
+              onChange={handleChange}
+              placeholder="Enter account name"
+              required
+            />
+          </div>
+          <button type="submit" disabled={loading} className="withdrawal-btn">
+            {loading ? "Requesting withdrawal..." : "Request Withdrawal"}
           </button>
         </form>
       </div>
 
       {/* Withdrawal History */}
-      <div className="withdrawal-history">
-        <h2>Withdrawal History</h2>
-        <div className="table-container">
-          <table className="history-table">
-            <thead>
-              <tr>
-                <th>Amount</th>
-                <th>Bank</th>
-                <th>Date</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {history.map((item) => (
-                <tr key={item.id}>
-                  <td>{item.amount}</td>
-                  <td>{item.bank}</td>
-                  <td>{item.date}</td>
-                  <td
-                    className={`status ${
-                      item.status === "Completed" ? "completed" : "pending"
-                    }`}
-                  >
-                    {item.status}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
+    <div className="withdrawal-history">
+  <h2>Withdrawal History</h2>
+  <div className="table-container">
+    <table className="history-table">
+      <thead>
+        <tr>
+          <th>Amount</th>
+          <th>Bank</th>
+          <th>Date & Time</th>
+          <th>Status</th>
+        </tr>
+      </thead>
+      <tbody>
+        {withdrawalsHistory.length === 0 ? (
+          <tr>
+            <td colSpan="4" style={{ textAlign: "center", padding: "10px" }}>
+              No withdrawal history available
+            </td>
+          </tr>
+        ) : (
+          withdrawalsHistory.map((item) => (
+            <tr key={item._id || item.id}>
+              <td>₦{(item?.amount.toLocaleString())}</td>
+              <td>{item?.bankName}</td>
+              <td>{new Date(item?.createdAt).toLocaleString()}</td>
+              <td style={{color:`${item.status==='completed'?'green':'red'}`}}
+              >
+                {item.status}
+              </td>
+            </tr>
+          ))
+        )}
+      </tbody>
+    </table>
+  </div>
+</div>
+
     </div>
   );
 }

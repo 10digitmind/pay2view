@@ -53,3 +53,33 @@
     padding: 8px;
   }
 }
+/* Empty state */
+.no-sales {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1rem;
+  color: #666;
+}
+
+.no-sales-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.no-sales-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.5rem;
+}
+
+/* Table status styles */
+.status.completed {
+  color: green;
+  font-weight: bold;
+}
+
+.status.pending {
+  color: orange;
+  font-weight: bold;
+}

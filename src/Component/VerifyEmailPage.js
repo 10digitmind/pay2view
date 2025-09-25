@@ -4,6 +4,8 @@ import { FaEnvelope} from "react-icons/fa";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+
+const API_URL =process.env.REACT_APP_API_URL 
 const VerifyEmailPage = () => {
   const [resending, setResending] = useState(false);
   const [timer, setTimer] = useState(0); // countdown in seconds
@@ -14,7 +16,7 @@ const {email} =useParams()
     try {
       setResending(true);
       setTimer(60); // start 60 seconds countdown
-const API_URL = "http://localhost:5000/api";
+
       await axios.post(`${API_URL}/resendverification-email`, { email: email });
       toast.success("Verification email resent!");
     } catch (err) {

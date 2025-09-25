@@ -1,114 +1,187 @@
 import React from 'react'
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import '../Styles/Profile.css'
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
+import axios from 'axios';
+
+import { getCurrentUser } from '../Redux/Asyncthunk';
+
+
+const API_URL =process.env.REACT_APP_API_URL 
+const token = localStorage.getItem('authToken')
 
 export default function ProfileTab() {
- const [editMode, setEditMode] = useState(false);
-   const { user} = useSelector((state) => state.auth)
-  const [profile, setProfile] = useState({
-    fullName: "John Doe",
-    username: "johndoe",
-    email: "johndoe@example.com",
-    image: "https://images.unsplash.com/photo-1756814879165-d2eb1606c3c0?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxmZWF0dXJlZC1waG90b3MtZmVlZHwxMXx8fGVufDB8fHx8fA%3D%3D", // default placeholder
+  const { user } = useSelector((state) => state.auth);
+  const [editMode, setEditMode] = useState(false);
+  const [loading, setLoading] = useState(true);
+  
+const dispatch = useDispatch()
+
+  const [form, setForm] = useState({
+    fullName: user?.fullName || "",
+    username: user?.username || "",
+    profilePic: user?.profilePic || "", // can be empty
   });
 
-  const [form, setForm] = useState(profile);
+
+  // Keep form in sync if user changes in store
+  useEffect(() => {
+    setForm({
+      fullName: user?.fullName || "",
+      username: user?.username || "",
+      profilePic: user?.profilePic || "",
+    });
+
+  }, [user]);
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    setForm((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
-      setForm({ ...form, image: URL.createObjectURL(file) });
+      // Preview image locally
+      setForm((prev) => ({
+        ...prev,
+        profilePic: URL.createObjectURL(file),
+        newImageFile: file, // save file for uploading
+      }));
     }
   };
 
-  const handleSave = () => {
-    setProfile(form);
-    setEditMode(false);
+  const handleSave = async () => {
+   setLoading(false)
+    try {
+      const data = new FormData();
+      data.append("fullName", form.fullName);
+      data.append("username", form.username);
+
+      if (form.newImageFile) {
+        data.append("image", form.newImageFile);
+      }
+
+      const res = await axios.post(`${API_URL}/update-user-profile`, data, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "multipart/form-data",
+        },
+      });
+    
+
+if(res.data.message === 'Profile updated successfully'){
+   setLoading(true)
+}
+  toast.success(res.data.message || "Profile updated successfully");
+      setEditMode(false);
+
+   dispatch(getCurrentUser())
+      // optionally update redux store with updated user
+    } catch (error) {
+      console.log(error)
+      toast.error(
+        error.response?.data?.message || "Failed to update profile"
+      );
+    }
   };
 
   const handleCancel = () => {
-    setForm(profile);
+    setForm({
+      fullName: user?.fullName || "",
+      username: user?.username || "",
+      profilePic: user?.profilePic || "",
+    });
     setEditMode(false);
   };
 
   return (
-    <div className="profile-container">
-      <div className="profile-header">
-        <h2>My Profile</h2>
-        {!editMode && (
-          <button className="edit-btn" onClick={() => setEditMode(true)}>
-            Edit
-          </button>
-        )}
-      </div>
+  <div className="profile-container">
+    <div className="profile-header">
+      <h2>My Profile</h2>
+      {!editMode && (
+        <button className="edit-btn" onClick={() => setEditMode(true)}>
+          Edit
+        </button>
+      )}
+    </div>
 
-      <div className="profile-pic">
-        <img src={editMode ? form.image : profile.image} alt="Profile" />
-        {editMode && (
-          <input
-            type="file"
-            accept="image/*"
-            onChange={handleImageChange}
-            className="upload-input"
-          />
-        )}
-      </div>
-
-      <div className="profile-details">
-        {editMode ? (
-          <>
-            <label>Full Name</label>
-            <input
-              type="text"
-              name="fullName"
-              value={form.fullName}
-              onChange={handleChange}
-            />
-
-            <label>Username</label>
-            <input
-              type="text"
-              name="username"
-              value={user?.username}
-              onChange={handleChange}
-            />
-
-            <label>Email</label>
-            <input
-              type="email"
-              name="email"
-              value={form.email}
-              onChange={handleChange}
-            />
-
-            <div className="profile-actions">
-              <button className="save-btn" onClick={handleSave}>
-                Save changes
-              </button>
-              <button className="cancel-btn" onClick={handleCancel}>
-                Cancel
-              </button>
-            </div>
-          </>
+    {/* Profile Picture with Fallback and Edit Overlay */}
+    <div className="profile-avatar-container">
+      <div className="avatar-wrapper">
+        {form.profilePic ? (
+          <img src={form.profilePic} alt="Profile" className="avatar-img" />
         ) : (
+          <div className="avatar-fallback">
+            {form.username?.slice(0, 2).toUpperCase() || "US"}
+          </div>
+        )}
+
+        {editMode && (
           <>
-            <p>
-              <strong>Full Name:</strong> {profile.fullName}
-            </p>
-            <p>
-              <strong>Username:</strong> {user?.username}
-            </p>
-            <p>
-              <strong>Email:</strong> {profile.email}
-            </p>
+            <label htmlFor="profilePicInput" className="avatar-edit-overlay">
+              ✎
+            </label>
+            <input
+              type="file"
+              id="profilePicInput"
+              accept="image/*"
+              onChange={handleImageChange}
+              style={{ display: "none" }}
+            />
           </>
         )}
       </div>
     </div>
-  );
+
+    {/* Profile Details */}
+    <div className="profile-details">
+      {editMode ? (
+        <>
+          <label>Full Name</label>
+          <input
+            type="text"
+            name="fullName"
+            value={form.fullName}
+            onChange={handleChange}
+          />
+
+          <label>Username</label>
+          <input
+            type="text"
+            name="username"
+            value={form?.username}
+            onChange={handleChange}
+          />
+
+          <label>Email</label>
+          <input type="email" value={user?.email} disabled />
+
+          <div className="profile-actions">
+            <button className="save-btn"  onClick={handleSave}>
+             {loading?'Save changes':'saving changes....'} 
+            </button>
+            <button className="cancel-btn" onClick={handleCancel}>
+              Cancel
+            </button>
+          </div>
+        </>
+      ) : (
+        <>
+          <p>
+            <strong>Full Name:</strong> {user?.fullName || "-"}
+          </p>
+          <p>
+            <strong>Username:</strong> {user?.username || "-"}
+          </p>
+          <p>
+            <strong>Email:</strong> {user?.email || "-"}
+          </p>
+        </>
+      )}
+    </div>
+  </div>
+);
+
 }

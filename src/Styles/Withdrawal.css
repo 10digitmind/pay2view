@@ -69,15 +69,8 @@ input {
   background-color: #f9f9f9;
 }
 
-.status.completed {
-  color: green;
-  font-weight: bold;
-}
 
-.status.pending {
-  color: orange;
-  font-weight: bold;
-}
+
 
 /* Responsive */
 @media (max-width: 768px) {

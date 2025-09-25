@@ -1,33 +1,18 @@
+import { useSelector } from 'react-redux';
 import '../Styles/Earning.css'
+import { useNavigate } from 'react-router-dom';
 
 
 export default function EarningTab() {
-   const sales = [
-    {
-      id: 1,
-      title: "Exclusive Tutorial",
-      reference: "TXN12345",
-      buyer: "john@example.com",
-      amount: "₦5,000",
-      date: "2025-09-01",
-      status: "Completed",
-    },
-    {
-      id: 2,
-      title: "Behind the Scenes",
-      reference: "TXN67890",
-      buyer: "jane@example.com",
-      amount: "₦2,000",
-      date: "2025-09-03",
-      status: "Pending",
-    },
-  ];
 
+      const { account} = useSelector((state) => state.auth)
+     
+      const navigate = useNavigate()
   return (
     <div className="earnings">
       <h2>Sales History</h2>
 
-      <div className="table-container">
+  <div className="table-container">
         <table className="sales-table">
           <thead>
             <tr>
@@ -38,27 +23,38 @@ export default function EarningTab() {
               <th>Status</th>
             </tr>
           </thead>
-          <tbody>
-            {sales.map((sale) => (
-              <tr key={sale.id}>
-                <td>
-                  <strong>{sale.title}</strong>
-                  <br />
-                  <small>{sale.reference}</small>
-                </td>
-                <td>{sale.buyer}</td>
-                <td>{sale.amount}</td>
-                <td>{sale.date}</td>
-                <td
-                  className={`status ${
-                    sale.status === "Completed" ? "completed" : "pending"
-                  }`}
-                >
-                  {sale.status}
-                </td>
-              </tr>
-            ))}
-          </tbody>
+         <tbody>
+  {account?.soldContent?.length === 0 ? (
+    <tr>
+      <td style={{cursor:"pointer"}} onClick={()=>navigate('/uplaod-content')} colSpan="5" className="no-sales">
+        <div className="no-sales-message">
+          <span className="no-sales-icon">📦</span>
+          <p>No sales content yet.<br />Upload and start earning!</p>
+        </div>
+      </td>
+    </tr>
+  ) : (
+    account.soldContent.map((sale) => (
+      <tr key={sale._id}>
+        <td>
+          <strong>{sale.title}</strong>
+          <br />
+          <small>{sale.reference}</small>
+        </td>
+        <td>{sale.buyerEmail}</td>
+        <td>₦{sale.amount}</td>
+        <td>{new Date(sale.soldAt).toLocaleDateString()}</td>
+        <td
+style={{ color: sale.status === "success" ? "green" : "red" }}
+
+        >
+          {sale.status}
+        </td>
+      </tr>
+    ))
+  )}
+</tbody>
+
         </table>
       </div>
     </div>

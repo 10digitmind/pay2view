@@ -2,7 +2,8 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { toast } from "react-toastify";
 
-const API_URL = "http://localhost:5000/api";
+const API_URL =process.env.REACT_APP_API_URL 
+
 export const loginUser = createAsyncThunk(
   "auth/loginUser",
   async ({ email, password }, thunkAPI) => {
@@ -14,6 +15,7 @@ export const loginUser = createAsyncThunk(
 
       return res.data; // contains user + token
     } catch (error) {
+      console.log(error)
       return thunkAPI.rejectWithValue(error.response?.data || "Login failed");
     }
   }
@@ -85,3 +87,84 @@ export const getCurrentUser = createAsyncThunk(
     }
   }
 );
+
+export const getUserContent = createAsyncThunk(
+  "content/getUserContent",
+  async (_, thunkAPI) => {
+    try {
+      const token = localStorage.getItem("authToken"); // get token from localStorage
+
+        const res = await axios.get(`${API_URL}/get-user-content`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      return res.data.contents;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message || "Failed to fetch content"
+      );
+    }
+  }
+);
+
+
+export const getUserAccount = createAsyncThunk(
+  "content/getUserAccount",
+  async (_,  thunkAPI) => {
+    try {
+      const token = localStorage.getItem("authToken"); // get token from localStorage
+
+        const res = await axios.get(`${API_URL}/get-user-account`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      return res.data.account;
+    } catch (error) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message || "Failed to fetch content"
+      );
+    }
+  }
+);
+
+
+export const getWithdrawalHistory = createAsyncThunk(
+  "content/getWithdrawalHistory",
+  async (_, thunkAPI) => {
+    try {
+      const token = localStorage.getItem("authToken"); 
+
+      const res = await axios.get(`${API_URL}/get-withdrawal-history`, {
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      const data = res.data;
+
+      if (data && data.withdrawals?.length > 0) {
+        return data.withdrawals; // return actual history
+      } else {
+        thunkAPI.dispatch(
+          toast.info("No withdrawal history yet. Start by requesting a withdrawal!")
+        );
+        return [];
+      }
+    } catch (error) {
+      const message =
+        error.response?.data?.message || error.message || "Unable to get withdrawal history";
+
+      if (message === "No withdrawal history found") {
+        return []; // safe fallback
+      }
+
+      thunkAPI.dispatch(toast.error(message));
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+

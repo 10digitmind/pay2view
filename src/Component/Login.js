@@ -48,20 +48,25 @@ const handleLogin = async () => {
 
     if (result?.token) {
       localStorage.setItem("authToken", result.token);
+        const now = Date.now();
+      const expiresAt = now + 24 * 60 *60 * 1000; 
+        localStorage.setItem("expiresAt", expiresAt);
       toast.success("Login successful!");
       navigate("/dashboard");
     }
-  } catch (err) {
-    if (err.name === "AbortError") {
-      toast.error("Network is slow. Please try again.");
-    } else if (err === "Email not verified") {
-      toast.error("Please verify your email before logging in.");
-      navigate(`/email-verification-sent/${email}`);
-    } else {
-      toast.error(err?.message || "Login failed. Please try again.");
-    }
-    setError(err);
-  } finally {
+} catch (error) {
+  if (error?.name === "AbortError") {
+    toast.error("Network is slow. Please try again.");
+  } else if (error === "Email not verified" || error?.message === "Email not verified") {
+    toast.error("Please verify your email before logging in.");
+    navigate(`/email-verification-sent/${email}`);
+  } else {
+    toast.error(
+      typeof error === "string" ? error : error?.message || "Login failed. Please try again."
+    );
+  }
+  setError(error);
+} finally {
     setLoading(false);
   }
 };

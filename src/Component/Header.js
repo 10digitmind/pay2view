@@ -27,7 +27,7 @@ const Header = () => {
 
   return (
     <header className="header">
-      <a href={token?'/dashboard':'/home'}>
+      <a href={token?'/dashboard':'/'}>
         <div className="logo">
           <img src={logo} alt="Pay2View Logo" />
         </div>
@@ -45,9 +45,9 @@ const Header = () => {
           </>
         ) : (
           <div className="user-menu">
-         {user?.profilePhoto ? (
+         {user?.profilePic ? (
   <img
-    src={user.profilePhoto}
+    src={user.profilePic}
     alt="Profile"
     className="profile-pic-nav"
   />
