@@ -22,6 +22,8 @@ import ResetPassword from './Component/ResetPassword';
 
 import AutoLogoutHandler from './utils/AutoLogOutHandler';
 import GuestRoute from './Component/GuestRoute';
+import AboutPage from './Component/AboutPage';
+import ContactPage from './Component/ContactPage';
 
 
 
@@ -72,6 +74,9 @@ function App() {
          </Route>
  <Route path="/view-content/:title/:id" element={<ViewContent />} />
      <Route path="/payment-verification/:reference" element={<PaymentVerification />} />
+          <Route path="/about-us" element={<AboutPage />} />
+                 <Route path="/contact" element={<ContactPage />} />
+
     <Route path="/" element={<Homepage />} />
                <Route element={<AuthRoute />}>
     <Route path="/dashboard" element={<Dashboard />} />

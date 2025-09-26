@@ -15,8 +15,8 @@ const Footer = () => {
       <div className="footer-sections">
         <div className="footer-column">
           <h4>Company</h4>
-          <a href="#">About</a>
-          <a href="#">Contact</a>
+          <a href="about-us">About</a>
+          <a href="contact">Contact</a>
           <a href="#">Careers</a>
         </div>
 
