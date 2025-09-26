@@ -7,8 +7,11 @@ import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { getWithdrawalHistory } from '../Redux/Asyncthunk';
 
+
 const token = localStorage.getItem("authToken")
 const API_URL =process.env.REACT_APP_API_URL 
+
+
 export default function WithdrawalTab() {
    const [form, setForm] = useState({
     amount: "",
@@ -22,7 +25,7 @@ export default function WithdrawalTab() {
 const { withdrawalsHistory } = useSelector((state) => state.auth);
 
 
-
+const dispatch = useDispatch()
 
 
 
@@ -54,7 +57,7 @@ const handleSubmit = async (e) => {
     const data = response.data;
 
     toast.success(data.message || "Withdrawal request submitted successfully");
-
+dispatch(getWithdrawalHistory())
     setForm({ amount: "", bankName: "", accountName: "", accountNumber: "" });
   } catch (error) {
     console.error("Withdrawal error:", error);

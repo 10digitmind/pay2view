@@ -42,7 +42,7 @@ export default function EarningTab() {
           <small>{sale.reference}</small>
         </td>
         <td>{sale.buyerEmail}</td>
-        <td>₦{sale.amount}</td>
+        <td>₦{(sale.amount).toLocaleString()}</td>
         <td>{new Date(sale.soldAt).toLocaleDateString()}</td>
         <td
 style={{ color: sale.status === "success" ? "green" : "red" }}

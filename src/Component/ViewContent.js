@@ -49,7 +49,7 @@ const [modalOpen, setModalOpen] = useState(false);
         <img src={content.preview_url} alt={content.title} className="preview-img" />
         <div className="lock-overlay">
           <FaLock className="lock-icon" />
-          <span className="price-tag">₦{(content.price / 100).toLocaleString()}</span>
+          <span className="price-tag">₦{(content.price ).toLocaleString()}</span>
         </div>
       </div>
 
@@ -76,7 +76,7 @@ const [modalOpen, setModalOpen] = useState(false);
 
       {/* Unlock Button */}
     <button className="unlock-btn" onClick={() => setModalOpen(true)}>
-  Unlock for ₦{(content.price / 100).toLocaleString()}
+  Unlock for ₦{(content.price ).toLocaleString()}
 </button>
       <p className="one-time-payment">One-time payment • No subscription required</p>
     </div>

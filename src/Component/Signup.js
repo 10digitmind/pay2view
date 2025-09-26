@@ -65,7 +65,7 @@ const [error, setError] = useState(null);
     clearTimeout(timeout);
 
     if (resultAction?._id) {
-      toast.success("Registration successful! Please check your email to verify.");
+    
       setTimeout(() => {
         navigate(`/email-verification-sent/${email}`);
       }, 200);

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { FaEye, FaEllipsisV, FaShieldAlt } from "react-icons/fa";
 import "../Styles/ContentTab.css";
 import { useNavigate } from "react-router-dom";
@@ -13,7 +13,7 @@ const API_URL =process.env.REACT_APP_API_URL
 
 function ContentTab() {
   const [menuOpen, setMenuOpen] = useState(null);
-  const [userContent, setUserContent] = useState([]);
+
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();

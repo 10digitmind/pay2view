@@ -19,9 +19,7 @@ import UploadContent from './Component/UploadContent';
 import ViewContent from './Component/ViewContent';
 import PaymentVerification from './Component/PaymentVerification';
 import ResetPassword from './Component/ResetPassword';
-import { useDispatch } from 'react-redux';
-import { logout } from './Redux/AuthSlice';
-import { useNavigate } from 'react-router-dom';
+
 import AutoLogoutHandler from './utils/AutoLogOutHandler';
 import GuestRoute from './Component/GuestRoute';
 
@@ -29,11 +27,10 @@ import GuestRoute from './Component/GuestRoute';
 
 function App() {
   const [showSplash, setShowSplash] = useState(false);
-const dispatch = useDispatch()
+
 
   useEffect(() => {
     const hasSeenSplash = localStorage.getItem("hasSeenSplash");
-console.log('ENV',process.env.REACT_APP_API_URL)
     if (!hasSeenSplash) {
       // Show splash only on the very first visit
       setShowSplash(true);

@@ -20,6 +20,7 @@ const Header = () => {
   const handleLogout = async () => {
     localStorage.clear()
    await dispatch(logout())
+   setMenuOpen(false)
     navigate('login')
 
 

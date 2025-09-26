@@ -67,7 +67,7 @@ const handlePay = async () => {
           <img src={content.preview_url} alt={content.title} className="modal-preview-img" />
           <div className="modal-content-info">
             <h2>{content.title}</h2>
-            <p>₦{(content.price / 100).toLocaleString()}</p>
+            <p>₦{(content.price ).toLocaleString()}</p>
           </div>
         </div>
 
@@ -86,15 +86,15 @@ const handlePay = async () => {
         <div className="modal-pricing">
           <div className="pricing-row">
             <span>Content Price:</span>
-            <span>₦{(content.price / 100).toLocaleString()}</span>
+            <span>₦{(content.price).toLocaleString()}</span>
           </div>
           <div className="pricing-row">
             <span>Platform Fee:</span>
-            <span>₦{platformFee/100}</span>
+            <span>₦{platformFee}</span>
           </div>
           <div className="pricing-row total">
             <span>Total:</span>
-            <span>₦{(content.price / 100).toLocaleString()}</span>
+            <span>₦{(content.price ).toLocaleString()}</span>
           </div>
         </div>
 
@@ -109,7 +109,7 @@ const handlePay = async () => {
 
         {/* Pay Button */}
         <button onClick={handlePay} className="pay-btn">
-          <FaCreditCard className="pay-icon" /> Pay ₦{(totalPrice / 100).toLocaleString()} with Paystack
+          <FaCreditCard className="pay-icon" /> Pay ₦{(totalPrice ).toLocaleString()} with Paystack
         </button>
 
         {/* Terms */}

@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { FaEnvelope} from "react-icons/fa";
 import { toast } from "react-toastify";
 import axios from "axios";
@@ -9,7 +8,7 @@ const API_URL =process.env.REACT_APP_API_URL
 const VerifyEmailPage = () => {
   const [resending, setResending] = useState(false);
   const [timer, setTimer] = useState(0); // countdown in seconds
-  const navigate = useNavigate();
+
 const {email} =useParams()
 
   const handleResend = async () => {

@@ -9,7 +9,7 @@ import { getCurrentUser } from '../Redux/Asyncthunk';
 
 
 const API_URL =process.env.REACT_APP_API_URL 
-const token = localStorage.getItem('authToken')
+
 
 export default function ProfileTab() {
   const { user } = useSelector((state) => state.auth);
@@ -63,12 +63,14 @@ const dispatch = useDispatch()
         data.append("image", form.newImageFile);
       }
 
+   const token = localStorage.getItem('authToken')
       const res = await axios.post(`${API_URL}/update-user-profile`, data, {
         headers: {
           Authorization: `Bearer ${token}`,
           "Content-Type": "multipart/form-data",
         },
       });
+
     
 
 if(res.data.message === 'Profile updated successfully'){
