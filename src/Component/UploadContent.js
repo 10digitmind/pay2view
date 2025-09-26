@@ -224,6 +224,10 @@ const UploadContent = ({setActiveTab}) => {
           <span className="circle"></span>
           Privacy Protected
         </div>
+          <div className="security-item">
+          <span className="circle"></span>
+         Get paid fast
+        </div>
       </div>
       </form>
       
