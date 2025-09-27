@@ -24,7 +24,7 @@ const handlePay = async () => {
   }
 
   // Open popup immediately
-  const popup = window.open("", "width=600,height=700,noopener,noreferrer");
+  const popup = window.open("", "_blank", "width=600,height=700,noopener,noreferrer");
   if (!popup) toast.info("Popup blocked. Redirecting in the current tab...");
 
   try {
