@@ -17,19 +17,14 @@ const UnlockModal = ({ isOpen, onClose, content }) => {
   const platformFee = 0.00; // 5% platform fee
   const totalPrice = content.price + platformFee;
 
+  
 const handlePay = async () => {
-  if (!email) {
-    toast.error("Please enter your email.");
-    return;
-  }
-
-  // Open popup immediately
-  const popup = window.open("", "_blank", "width=600,height=700,noopener,noreferrer");
-  if (!popup) toast.info("Popup blocked. Redirecting in the current tab...");
+  if (!email) { toast.error("Please enter your email."); return; }
 
   try {
     setLoading(true);
 
+    // Initialize payment on server
     const res = await axios.post(`${API_URL}/pay-2-view`, {
       buyerEmail: email,
       contentId: content._id,
@@ -39,7 +34,6 @@ const handlePay = async () => {
 
     if (alreadyPaid) {
       localStorage.setItem("paystack_ref", reference);
-      if (popup) popup.close();
       navigate(`/payment-verification/${reference}`);
       return;
     }
@@ -47,18 +41,15 @@ const handlePay = async () => {
     const { authorization_url } = data;
     localStorage.setItem("paystack_ref", data.reference);
 
-    if (popup) {
-      // Simply navigate the popup to the Paystack URL
-      popup.location.href = authorization_url;
-      popup.focus();
-    } else {
-      // fallback: redirect current tab
+    // Open Paystack directly from click
+    const newWindow = window.open(authorization_url, "_blank");
+    if (!newWindow) {
+      // Fallback: redirect current tab
       window.location.href = authorization_url;
     }
 
   } catch (err) {
     toast.error("Payment initialization failed. Try again.");
-    if (popup) popup.close();
   } finally {
     setLoading(false);
   }
