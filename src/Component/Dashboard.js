@@ -1,6 +1,6 @@
 // Dashboard.js
 import React, { useState } from "react";
-import { FaTachometerAlt, FaFolder, FaMoneyBill, FaWallet, FaUser } from "react-icons/fa";
+import { FaTachometerAlt, FaFolder, FaMoneyBill, FaWallet, FaUser,FaCog } from "react-icons/fa";
 import "../Styles/Dashboard.css";
 import DashboardHome from "./DashboardHome";
 import ContentTab from "./ContentTab";
@@ -9,12 +9,14 @@ import WithdrawalTab from "./WithdrawalTab";
 import ProfileTab from "./ProfileTab";
 
 
+
 const tabs = [
   { name: "Dashboard", icon: <FaTachometerAlt />, component: DashboardHome  },
   { name: "Content", icon: <FaFolder />, component: ContentTab },
   { name: "Earnings", icon: <FaMoneyBill />, component: EarningTab  },
   { name: "Withdrawal", icon: <FaWallet />, component: WithdrawalTab  },
   { name: "Profile", icon: <FaUser />, component: ProfileTab },
+
 
 ];
 

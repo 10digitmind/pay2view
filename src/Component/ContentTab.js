@@ -96,7 +96,7 @@ setMenuOpen(null)
                 <div className="content-details">
                   <h3>{item.title}</h3>
                   <p className="price">₦{(item.price ).toLocaleString()}</p>
-                  <div className="stats">
+                  <div className="stats-content">
                     <span>
                       <FaEye /> {item.viewCount || 0}
                     </span>
@@ -128,7 +128,6 @@ setMenuOpen(null)
                   />
                   {menuOpen === item._id && (
                     <div className="menu-dropdown">
-                      <button>Edit</button>
                       <button onClick={() => handleDelete(item._id)}>
                         Delete
                       </button>

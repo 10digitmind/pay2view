@@ -1,0 +1,150 @@
+.privacy-page {
+  margin: 0 auto;
+  padding: 2rem;
+  color: #111;
+  line-height: 1.6;
+  max-width: 1200px;
+}
+
+.privacy-header {
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.privacy-icon {
+  font-size: 3rem;
+  color: #111;
+  margin-bottom: 1rem;
+}
+
+.privacy-header h1 {
+  font-size: 2rem;
+  font-weight: bold;
+}
+
+.last-updated {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.intro {
+  margin-top: 1rem;
+  color: #444;
+}
+
+/* Privacy Principles */
+.principles-box {
+  display: flex;
+  gap: 1rem;
+  margin: 1rem 0 2rem;
+  flex-wrap: wrap;
+}
+
+.principle {
+  flex: 1 1 250px;
+  border: 1px solid #ccc;
+  background: #f5f5f5;
+  padding: 1rem;
+  border-radius: 6px;
+  text-align: center;
+}
+
+.principle-icon {
+  font-size: 2rem;
+  color: #555;
+  margin-bottom: 0.5rem;
+}
+
+/* Data Section */
+.data-box {
+  border: 1px solid #ccc;
+  padding: 1.5rem;
+  border-radius: 6px;
+  margin: 1rem 0 2rem;
+}
+
+.data-box h3 {
+  margin-top: 1rem;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Privacy Content */
+.privacy-content h2 {
+  margin-top: 2rem;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.privacy-content ul {
+  margin: 0.5rem 0 1rem 1.5rem;
+}
+
+/* Rights Box */
+.rights-box {
+  border: 1px solid #888;
+  background: #f9f9f9;
+  padding: 1.5rem;
+  border-radius: 6px;
+  margin-top: 3rem;
+}
+
+/* DPO Box */
+.dpo-box {
+  border: 1px solid #444;
+  background: #eee;
+  padding: 1.5rem;
+  border-radius: 6px;
+  margin-top: 2rem;
+}
+
+/* --- Responsive Styles --- */
+@media (max-width: 992px) {
+  .privacy-header h1 {
+    font-size: 1.75rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .privacy-page {
+    padding: 1.5rem;
+  }
+
+  .privacy-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .principles-box {
+    flex-direction: column;
+  }
+
+  .principle {
+    flex: 1 1 100%;
+  }
+
+  .data-box {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .privacy-page {
+    padding: 1rem;
+  }
+
+  .privacy-icon {
+    font-size: 2.2rem;
+  }
+
+  .privacy-header h1 {
+    font-size: 1.3rem;
+  }
+
+  .data-box h3 {
+    font-size: 1rem;
+  }
+
+  .privacy-content h2 {
+    font-size: 1.1rem;
+  }
+}

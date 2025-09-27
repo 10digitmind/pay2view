@@ -24,6 +24,9 @@ import AutoLogoutHandler from './utils/AutoLogOutHandler';
 import GuestRoute from './Component/GuestRoute';
 import AboutPage from './Component/AboutPage';
 import ContactPage from './Component/ContactPage';
+import FaqPage from './Component/FaqPage';
+import TermsPage from './Component/TermsPage';
+import PrivacyPolicyPage from './Component/PrivacyPolicyPage';
 
 
 
@@ -72,10 +75,14 @@ function App() {
    
         <Route path="/reset-password/:token" element={<ResetPassword />} />
          </Route>
+  
  <Route path="/view-content/:title/:id" element={<ViewContent />} />
      <Route path="/payment-verification/:reference" element={<PaymentVerification />} />
           <Route path="/about-us" element={<AboutPage />} />
                  <Route path="/contact" element={<ContactPage />} />
+                        <Route path="/faq" element={<FaqPage />} />
+                         <Route path="/Terms-Condition" element={<TermsPage />} />
+                            <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
 
     <Route path="/" element={<Homepage />} />
                <Route element={<AuthRoute />}>

@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 
 import { getCurrentUser } from '../Redux/Asyncthunk';
+import SettingsPage from './SettingPage';
 
 
 const API_URL =process.env.REACT_APP_API_URL 
@@ -104,9 +105,10 @@ if(res.data.message === 'Profile updated successfully'){
       <h2>My Profile</h2>
       {!editMode && (
         <button className="edit-btn" onClick={() => setEditMode(true)}>
-          Edit
+          Edit-Profile
         </button>
       )}
+    
     </div>
 
     {/* Profile Picture with Fallback and Edit Overlay */}
@@ -183,6 +185,7 @@ if(res.data.message === 'Profile updated successfully'){
         </>
       )}
     </div>
+    <SettingsPage/>
   </div>
 );
 

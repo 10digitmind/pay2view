@@ -117,16 +117,16 @@ export default function AboutPage() {
           <div className="team-member">
             <div className="avatar">AA</div>
             <h3>Adebayo Annoulai</h3>
-            <p className="role">Co-Founder & CEO</p>
+            <p className="role">Co-Founder & CTO</p>
             <p className="bio">
-              Former fintech executive with 8+ years in Nigerian digital
+               AI solution executive for Business with 8+ years in Nigerian digital
               payments.
             </p>
           </div>
           <div className="team-member">
-            <div className="avatar">TM</div>
-            <h3>Tunde Musa</h3>
-            <p className="role">Co-Founder & CTO</p>
+            <div className="avatar">KO</div>
+            <h3>Kehinde Olubode</h3>
+            <p className="role">Co-Founder & CEO</p>
             <p className="bio">
               Tech entrepreneur passionate about building scalable platforms.
             </p>

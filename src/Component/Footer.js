@@ -17,19 +17,18 @@ const Footer = () => {
           <h4>Company</h4>
           <a href="about-us">About</a>
           <a href="contact">Contact</a>
-          <a href="#">Careers</a>
+        
         </div>
 
         <div className="footer-column">
           <h4>Legal</h4>
-          <a href="#">Terms</a>
-          <a href="#">Privacy</a>
+          <a href="Terms-Condition">Terms</a>
+          <a href="privacy-policy">Privacy</a>
         </div>
 
         <div className="footer-column">
           <h4>Support</h4>
-          <a href="#">Help Center</a>
-          <a href="#">FAQs</a>
+          <a href="faq">FAQs</a>
         </div>
       </div>
 
