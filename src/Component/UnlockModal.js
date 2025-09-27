@@ -8,7 +8,8 @@ const API_URL =process.env.REACT_APP_API_URL
 
 const UnlockModal = ({ isOpen, onClose, content }) => {
   const [email, setEmail] = useState("");
-  const [loading, setLoading] = useState()
+const [loading, setLoading] = useState(false);
+const [redirecting, setRedirecting] = useState(false);
   const navigate =useNavigate()
 
   if (!isOpen) return null;
@@ -17,19 +18,19 @@ const UnlockModal = ({ isOpen, onClose, content }) => {
   const platformFee = 0.00; // 5% platform fee
   const totalPrice = content.price + platformFee;
 
-  
+
 const handlePay = async () => {
   if (!email) { toast.error("Please enter your email."); return; }
 
   try {
     setLoading(true);
 
-    // Initialize payment on server
     const res = await axios.post(`${API_URL}/pay-2-view`, {
       buyerEmail: email,
       contentId: content._id,
       platformFee: 0
     });
+
     const { alreadyPaid, reference, data } = res.data;
 
     if (alreadyPaid) {
@@ -41,10 +42,11 @@ const handlePay = async () => {
     const { authorization_url } = data;
     localStorage.setItem("paystack_ref", data.reference);
 
-    // Open Paystack directly from click
+    setRedirecting(true); // show "Redirecting" message
+
+    // Open Paystack in new window (desktop) or fallback redirect (mobile)
     const newWindow = window.open(authorization_url, "_blank");
     if (!newWindow) {
-      // Fallback: redirect current tab
       window.location.href = authorization_url;
     }
 
@@ -52,8 +54,10 @@ const handlePay = async () => {
     toast.error("Payment initialization failed. Try again.");
   } finally {
     setLoading(false);
+    setRedirecting(false); // optional: if you want button to reset after redirect fails
   }
 };
+
 
 
 
@@ -110,9 +114,22 @@ const handlePay = async () => {
         </div>
 
         {/* Pay Button */}
-        <button onClick={handlePay} className="pay-btn">
-          <FaCreditCard className="pay-icon" /> Pay ₦{(totalPrice ).toLocaleString()} with Paystack
-        </button>
+      <button
+  onClick={handlePay}
+  className="pay-btn"
+  disabled={loading || redirecting} // disable button while in process
+>
+  {loading ? (
+    <span>Redirecting...</span> // or a spinner component
+  ) : redirecting ? (
+    <span>Redirecting to Paystack...</span>
+  ) : (
+    <>
+      <FaCreditCard className="pay-icon" />
+      Pay ₦{totalPrice.toLocaleString()} with Paystack
+    </>
+  )}
+</button>
 
         {/* Terms */}
         <p className="modal-terms">
