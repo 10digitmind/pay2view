@@ -17,12 +17,15 @@ const UnlockModal = ({ isOpen, onClose, content }) => {
   const platformFee = 0.00; // 5% platform fee
   const totalPrice = content.price + platformFee;
 
-
 const handlePay = async () => {
   if (!email) {
     toast.error("Please enter your email.");
     return;
   }
+
+  // Open popup immediately
+  const popup = window.open("", "width=600,height=700,noopener,noreferrer");
+  if (!popup) toast.info("Popup blocked. Redirecting in the current tab...");
 
   try {
     setLoading(true);
@@ -30,29 +33,37 @@ const handlePay = async () => {
     const res = await axios.post(`${API_URL}/pay-2-view`, {
       buyerEmail: email,
       contentId: content._id,
-      platformFee: 0, // start with 0
+      platformFee: 0
     });
-
-    // Destructure from response
     const { alreadyPaid, reference, data } = res.data;
 
     if (alreadyPaid) {
-      // 🚀 User already paid → navigate straight to verify page
       localStorage.setItem("paystack_ref", reference);
+      if (popup) popup.close();
       navigate(`/payment-verification/${reference}`);
-    } else {
-      // 🚀 Fresh payment → open Paystack checkout
-      const { authorization_url, reference: newRef } = data;
-      localStorage.setItem("paystack_ref", newRef);
-      window.open(authorization_url, "_blank");
+      return;
     }
+
+    const { authorization_url } = data;
+    localStorage.setItem("paystack_ref", data.reference);
+
+    if (popup) {
+      // Simply navigate the popup to the Paystack URL
+      popup.location.href = authorization_url;
+      popup.focus();
+    } else {
+      // fallback: redirect current tab
+      window.location.href = authorization_url;
+    }
+
   } catch (err) {
-    console.error(err);
     toast.error("Payment initialization failed. Try again.");
+    if (popup) popup.close();
   } finally {
     setLoading(false);
   }
 };
+
 
 
   return (
@@ -86,7 +97,7 @@ const handlePay = async () => {
         <div className="modal-pricing">
           <div className="pricing-row">
             <span>Content Price:</span>
-            <span>₦{(content.price).toLocaleString()}</span>
+            <span>₦{(content.price / 100).toLocaleString()}</span>
           </div>
           <div className="pricing-row">
             <span>Platform Fee:</span>
