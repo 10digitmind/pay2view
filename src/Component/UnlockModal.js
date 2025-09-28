@@ -92,7 +92,7 @@ const handlePay = async () => {
         <div className="modal-pricing">
           <div className="pricing-row">
             <span>Content Price:</span>
-            <span>₦{(content.price / 100).toLocaleString()}</span>
+            <span>₦{(content.price).toLocaleString()}</span>
           </div>
           <div className="pricing-row">
             <span>Platform Fee:</span>

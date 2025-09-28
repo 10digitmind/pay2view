@@ -77,7 +77,7 @@ function App() {
          </Route>
   
  <Route path="/view-content/:title/:id" element={<ViewContent />} />
-     <Route path="/payment-verification/:reference" element={<PaymentVerification />} />
+     <Route path="/payment-verification" element={<PaymentVerification />} />
           <Route path="/about-us" element={<AboutPage />} />
                  <Route path="/contact" element={<ContactPage />} />
                         <Route path="/faq" element={<FaqPage />} />
