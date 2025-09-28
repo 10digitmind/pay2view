@@ -50,7 +50,7 @@ export default function AboutPage() {
       <section className="story">
         <h2>Our Story</h2>
         <p>
-          Founded in 2023, Pay2View emerged from a simple observation: African
+          Founded in 2025, Pay2View emerged from a simple observation: African
           creators needed a reliable, secure platform to monetize their premium
           content without complex subscriptions or high fees.
         </p>

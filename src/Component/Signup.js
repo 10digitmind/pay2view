@@ -146,8 +146,8 @@ const [error, setError] = useState(null);
         {/* Agreement */}
         <p className="agreement">
           By creating an account, you agree to our{" "}
-          <a href="/terms">Terms of Service</a> and{" "}
-          <a href="/privacy">Privacy Policy</a>.
+          <a href="/Terms-Condition">Terms of Service</a> and{" "}
+          <a href="/privacy-policy">Privacy Policy</a>.
         </p>
       </div>
     </div>

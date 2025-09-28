@@ -1,8 +1,61 @@
-// ContactPage.jsx
-import { FaEnvelope, FaPhone, FaMapMarkerAlt ,FaPaperPlane} from "react-icons/fa";
-import "../Styles/contact.css";
+import { useState } from "react";
+import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaPaperPlane } from "react-icons/fa";
+import axios from "axios";
+import { toast } from "react-toastify";
+import '../Styles/contact.css'
 
-export default function ContactPage() {
+const API_URL =process.env.REACT_APP_API_URL 
+const ContactPage = () => {
+  const [formData, setFormData] = useState({
+    fullname: "",
+    email: "",
+    category: "",
+    subject: "",
+    message: "",
+  });
+
+  const [loading, setLoading] = useState(false);
+
+  const handleChange = (e) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+if (!formData ) {
+    toast.error('All field required')
+    return 
+  }
+
+    try {
+      setLoading(true);
+      const res = await axios.post(`${API_URL}/contact`, formData);
+
+      if (res.data.success) {
+        toast.success("Message sent successfully!");
+       setLoading(false)
+       setFormData({
+    fullname: "",
+    email: "",
+    category: "",
+    subject: "",
+    message: "",
+  });
+
+      } else {
+        toast.error(res.data.message || "Something went wrong.");
+      }
+    } catch (err) {
+      console.error(err);
+      toast.error("Failed to send message. Try again.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="contact-page">
       {/* Hero Section */}
@@ -47,21 +100,43 @@ export default function ContactPage() {
       {/* Contact Form */}
       <section className="contact-form">
         <h2>Send Us a Message</h2>
-        <form>
+        <form >
           <div className="form-group">
             <label htmlFor="fullname">Full Name</label>
-            <input type="text" id="fullname" name="fullname"  placeholder="Your full name " required />
+            <input
+              type="text"
+              id="fullname"
+              name="fullname"
+              placeholder="Your full name"
+              value={formData.fullname}
+              onChange={handleChange}
+              required
+            />
           </div>
 
           <div className="form-group">
             <label htmlFor="email">Email Address</label>
-            <input type="email" id="email" name="email"  placeholder="Your.email@example.com" required />
-            
+            <input
+              type="email"
+              id="email"
+              name="email"
+              placeholder="Your.email@example.com"
+              value={formData.email}
+              onChange={handleChange}
+              required
+            />
           </div>
 
           <div className="form-group">
             <label htmlFor="category">Category</label>
-            <select id="category" name="category" required>
+            <select
+              id="category"
+              name="category"
+              value={formData.category}
+              onChange={handleChange}
+              required
+              className="category-select"
+            >
               <option value="">Select a category</option>
               <option value="support">Support</option>
               <option value="partnership">Partnership</option>
@@ -72,41 +147,62 @@ export default function ContactPage() {
 
           <div className="form-group">
             <label htmlFor="subject">Subject</label>
-            <input type="text" id="subject" name="subject" placeholder="Brief subject of the message" required />
+            <input
+              type="text"
+              id="subject"
+              name="subject"
+              placeholder="Brief subject of the message"
+              value={formData.subject}
+              onChange={handleChange}
+              required
+            />
           </div>
 
           <div className="form-group">
             <label htmlFor="message">Message</label>
-            <textarea id="message" name="message" rows="5"  placeholder="Please provide much details as possible " required></textarea>
+            <textarea
+              id="message"
+              name="message"
+              rows="5"
+              placeholder="Please provide as much detail as possible"
+              value={formData.message}
+              onChange={handleChange}
+              required
+            ></textarea>
           </div>
 
-          <button type="submit" className="submit-btn">
-            {<FaPaperPlane size={13} className="send-icon"/>}Send Message
+          <button type="submit" className="submit-btn" onClick={handleSubmit} disabled={loading}>
+            {loading ? "Sending..." : <><FaPaperPlane size={13} className="send-icon"/> Send Message</>}
           </button>
         </form>
       </section>
-      <section className="contact-info-box">
-  <div className="response-time">
-    <h3>Response Time</h3>
-    <ul>
-      <li>• General inquiries: Within 24 hours</li>
-      <li>• Technical support: Within 4-6 hours</li>
-      <li>• Payment issues: Within 2-4 hours</li>
-      <li>• Emergency issues: Call our support line</li>
-    </ul>
-  </div>
-</section>
 
-<section>
-      <div className="faq-box">
-    <h3>Need Quick Answers?</h3>
-    <p>
-      Check our FAQ section for common questions about payments, content
-      upload, and account management.
-    </p>
-    <a href="/faq" className="faq-link">Browse FAQ →</a>
-  </div>
-</section>
+      {/* Response time */}
+      <section className="contact-info-box">
+        <div className="response-time">
+          <h3>Response Time</h3>
+          <ul>
+            <li>• General inquiries: Within 24 hours</li>
+            <li>• Technical support: Within 4-6 hours</li>
+            <li>• Payment issues: Within 2-4 hours</li>
+            <li>• Emergency issues: Call our support line</li>
+          </ul>
+        </div>
+      </section>
+
+      {/* FAQ */}
+      <section>
+        <div className="faq-box">
+          <h3>Need Quick Answers?</h3>
+          <p>
+            Check our FAQ section for common questions about payments, content
+            upload, and account management.
+          </p>
+          <a href="/faq" className="faq-link">Browse FAQ →</a>
+        </div>
+      </section>
     </div>
   );
-}
+};
+
+export default ContactPage;

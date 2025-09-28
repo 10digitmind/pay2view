@@ -78,7 +78,7 @@ const [modalOpen, setModalOpen] = useState(false);
     <button className="unlock-btn" onClick={() => setModalOpen(true)}>
   Unlock for ₦{(content.price ).toLocaleString()}
 </button>
-      <p className="one-time-payment">One-time payment • No subscription required</p>
+      <p className="one-time-payment">One-time payment .  No subscription required</p>
     </div>
     <UnlockModal
   isOpen={modalOpen}
