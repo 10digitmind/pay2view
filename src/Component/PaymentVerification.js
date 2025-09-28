@@ -1,6 +1,6 @@
 // PaymentVerification.js
 import React, { useEffect, useState } from "react";
-import { useSearchParams, useNavigate, useParams } from "react-router-dom";
+import { useSearchParams, useNavigate, useParams, useLocation } from "react-router-dom";
 import axios from "axios";
 import { FaDownload, FaLockOpen } from "react-icons/fa";
 import "../Styles/PaymentVerification.css";
@@ -8,20 +8,24 @@ import "../Styles/PaymentVerification.css";
 const API_URL =process.env.REACT_APP_API_URL 
 
 const PaymentVerification = () => {
-  const {reference} = useParams();
+    const location = useLocation();
+   const params = new URLSearchParams(location.search);
+    const reference = params.get("reference");
   const navigate = useNavigate();
 //   const reference = searchParams.get("reference");
 
   const [loading, setLoading] = useState(true);
   const [unlockedContent, setUnlockedContent] = useState(null);
   const [error, setError] = useState(null);
-const ref = localStorage.getItem('paystack_ref') || reference
+const ref =  reference
 
   useEffect(() => {
     if (!ref) {
       setError("No reference found in URL.");
       setLoading(false);
+
       return;
+   
     }
 
   const verifyPayment = async () => {
@@ -41,7 +45,7 @@ const ref = localStorage.getItem('paystack_ref') || reference
     }
   } catch (err) {
     console.error(err);
-    setError("Error verifying payment. Please try again.");
+    setError("Error verifying payment. Please try again or cotact support.");
   } finally {
     setLoading(false);
   }
@@ -69,7 +73,9 @@ const ref = localStorage.getItem('paystack_ref') || reference
     </div>
   );
 }
-  if (error) return <p className="error">{error}</p>;
+  if (error) return<div style={{width:'100%',height:'50vh',display:"flex",alignItems:"center",justifyContent:"center",backgroundColor:"grey ",color:"black"}}>
+<p className="error">{error}</p>;
+  </div> 
 
   return (
    <div className="payment-success-container">
