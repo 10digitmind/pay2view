@@ -147,7 +147,7 @@ export default function TermsPage() {
       <div className="contact-box">
         <h3>Questions About These Terms?</h3>
         <p>If you have any questions about these Terms of Service, please contact us:</p>
-        <p><strong>Email:</strong> legal@pay2view.ng</p>
+        <p><strong>Email:</strong> hello@pay2view.ng</p>
         <p><strong>Address:</strong> Pay2View Limited, Victoria Island, Lagos, Nigeria</p>
         <p><strong>Phone:</strong> +234 (0) 906 123 4567</p>
       </div>

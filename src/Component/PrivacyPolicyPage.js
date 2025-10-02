@@ -205,14 +205,14 @@ export default function PrivacyPolicyPage() {
           <li>• Export your data</li>
           <li>• Opt out of communications</li>
         </ul>
-        <p><strong>Contact:</strong> privacy@pay2view.ng</p>
+        <p><strong>Contact:</strong> hello@pay2view.ng</p>
       </section>
 
       {/* DPO Section */}
       <section className="dpo-box">
         <h3>Data Protection Officer</h3>
         <p>For privacy-related questions or concerns, contact our Data Protection Officer:</p>
-        <p><strong>Email:</strong> dpo@pay2view.ng</p>
+        <p><strong>Email:</strong> hello@pay2view.ng</p>
         <p><strong>Address:</strong> Pay2View Limited, Victoria Island, Lagos, Nigeria</p>
         <p><strong>Response Time:</strong> Within 72 hours for urgent matters</p>
       </section>
