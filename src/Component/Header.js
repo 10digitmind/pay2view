@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+import React,{useEffect, useState} from "react";
 import "../Styles/Header.css";
 import logo from '../Image/pay2view.png'
 import { useDispatch, useSelector } from "react-redux";
@@ -16,6 +16,7 @@ const Header = () => {
   const toggleMenu = () => setMenuOpen(!menuOpen);
   const navigate =useNavigate()
   const dispatch = useDispatch()
+
 
   const handleLogout = async () => {
     localStorage.clear()

@@ -1,7 +1,7 @@
 // Footer.jsx
 import React from "react";
 import logo from "../Image/pay2view.png"; // adjust path to your logo
-import { FaTwitter, FaInstagram, FaFacebookF } from "react-icons/fa";
+import { FaTwitter, FaInstagram, FaFacebookF ,FaTiktok} from "react-icons/fa";
 import '../Styles/Footer.css'
 const Footer = () => {
   return (
@@ -34,9 +34,9 @@ const Footer = () => {
 
       {/* Socials */}
       <div className="footer-socials">
-        <a href="#"><FaTwitter /></a>
-        <a href="#"><FaInstagram /></a>
-        <a href="#"><FaFacebookF /></a>
+        <a href="https://twitter.com/pay2view.io" target="_blank" rel="noreferrer"><FaTwitter /></a>
+        <a href="https://www.instagram.com/pay2view.io" target="_blank" rel="noreferrer"><FaInstagram /></a>
+        <a href="https://www.tiktok.com/pay2view66" target="_blank" rel="noreferrer"><FaTiktok /></a>
       </div>
 
       <p className="footer-copy">© {new Date().getFullYear()} Pay2View. All rights reserved.</p>
