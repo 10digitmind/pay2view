@@ -35,7 +35,7 @@ const handlePay = async () => {
 
     if (alreadyPaid) {
       localStorage.setItem("paystack_ref", reference);
-      navigate(`/payment-verification/${reference}`);
+      navigate(`/payment-verification?trxref=${reference}&reference=${reference}`);
       return;
     }
 
