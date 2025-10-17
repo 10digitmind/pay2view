@@ -39,7 +39,11 @@ const Footer = () => {
         <a href="https://www.tiktok.com/pay2view66" target="_blank" rel="noreferrer"><FaTiktok /></a>
       </div>
 
-      <p className="footer-copy">© {new Date().getFullYear()} Pay2View. All rights reserved.</p>
+      <p className="footer-copy">
+  © {new Date().getFullYear()} Pay2View. All rights reserved.{" "}
+  <span>Powered by <strong>Thriftify</strong>.</span>
+</p>
+
     </footer>
   );
 };
