@@ -36,7 +36,6 @@ const ref =  reference
       reference: ref, // send in body
     });
 
-    console.log(res.data);
 
     if (res.data.success) {
       setUnlockedContent(res.data);

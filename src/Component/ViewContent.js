@@ -22,7 +22,7 @@ const [modalOpen, setModalOpen] = useState(false);
 
         });
         setContent(res.data.content);
-        console.log(res)
+      
        
       } catch (err) {
         console.error(err);
