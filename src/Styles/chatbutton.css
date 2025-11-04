@@ -1,0 +1,30 @@
+.chat-button {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #000000;
+    color: white;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 50px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+    transition: background 0.3s ease, transform 0.2s ease;
+    text-decoration: none;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+  
+  .chat-button:hover {
+    background-color: #141515;
+    transform: scale(1.1);
+  }
+  
+  .chat-button:active {
+    transform: scale(1);
+  }
+  

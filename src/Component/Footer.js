@@ -3,8 +3,11 @@ import React from "react";
 import logo from "../Image/pay2view.png"; // adjust path to your logo
 import { FaTwitter, FaInstagram, FaFacebookF ,FaTiktok} from "react-icons/fa";
 import '../Styles/Footer.css'
+import ChatButton from "./ChatButton";
 const Footer = () => {
   return (
+    <>
+
     <footer className="footer">
       {/* Logo */}
       <div className="footer-logo">
@@ -45,6 +48,8 @@ const Footer = () => {
 </p>
 
     </footer>
+    <ChatButton/>
+        </>
   );
 };
 
