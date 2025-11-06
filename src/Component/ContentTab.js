@@ -111,7 +111,7 @@ setMenuOpen(null)
                 <button
                   className="share-btn"
                   onClick={() => {
-                    navigator.clipboard.writeText(item.shareLink);
+                    navigator.clipboard.writeText(item.shareLink.trim().replace(/\s+/g, '%20'));
                     toast.success("Share link copied! Earn when someone buys.");
                   }}
                 >

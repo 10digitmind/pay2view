@@ -28,7 +28,7 @@ const dispatch = useDispatch()
      
       try {
         const res = await axios.post(`${API_URL}/verify-email?token=${token}`);
-        console.log(res)
+    
         setStatus("success");
         setMessage(res.data.message);
         toast.success(res.data.message);
