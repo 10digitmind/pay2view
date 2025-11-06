@@ -134,6 +134,7 @@ font-size: 10px;
   padding: 20px;
   font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
   color: #374151; /* neutral text */
+  height: 50vh;
 }
 
 .nice-loader .spinner {
