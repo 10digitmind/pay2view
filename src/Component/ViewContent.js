@@ -37,7 +37,13 @@ const [modalOpen, setModalOpen] = useState(false);
 
 
 
-  if (loading) return <p>Loading content...</p>;
+  if (loading) return<div id="content-area">
+  <div class="nice-loader">
+    <div class="spinner"></div>
+    <p>Loading content...</p>
+  </div>
+</div>
+
   if (!content) return <p>Content not found</p>;
 
   return (
