@@ -69,13 +69,29 @@ const handlePay = async () => {
         </button>
 
         {/* Content Preview */}
-        <div className="modal-content-preview">
-          <img src={content.preview_url} alt={content.title} className="modal-preview-img" />
-          <div className="modal-content-info">
-            <h2>{content.title}</h2>
-            <p>₦{(content.price ).toLocaleString()}</p>
-          </div>
-        </div>
+       <div className="modal-content-preview">
+  {content.videoUrl ? (
+    // Cloudflare thumbnail for video
+    <img
+      src={`https://videodelivery.net/${content.videoUrl}/thumbnails/thumbnail.jpg?time=5s`}
+      alt={content.title}
+      className="modal-preview-img"
+      style={{opacity:'0.5'}}
+    />
+  ) : (
+    // Normal image for other content
+    <img
+      src={content.preview_url}
+      alt={content.title}
+      className="modal-preview-img"
+    />
+  )}
+  <div className="modal-content-info">
+    <h2>{content.title}</h2>
+    <p>₦{content.price.toLocaleString()}</p>
+  </div>
+</div>
+
 
         {/* Email Input */}
         <div className="modal-email">

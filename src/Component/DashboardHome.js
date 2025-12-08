@@ -3,15 +3,13 @@ import { FaWallet, FaFileAlt, FaDollarSign, FaUpload, FaClock } from "react-icon
 import "../Styles/Dashboardhome.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getCurrentUser, getUserAccount, getUserContent, getWithdrawalHistory } from "../Redux/Asyncthunk";
-import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { toast } from "react-toastify";
+
 import { useMemo } from "react";
 import startOfMonth from "date-fns/startOfMonth";
 import endOfMonth from "date-fns/endOfMonth";
 import isWithinInterval from "date-fns/isWithinInterval";
 import parseISO from "date-fns/parseISO";
-import isAfter from "date-fns/isAfter";
+
 
 
 const DashboardHome = ({setActiveTab}) => {
@@ -19,7 +17,9 @@ const DashboardHome = ({setActiveTab}) => {
   const token = localStorage.getItem('authToken')
 
 
-  
+  const [showAlert, setShowAlert] = useState(true);
+const [showFeatureAlert, setShowFeatureAlert] = useState(true);
+
 
     const { content,loading,account,withdrawalsHistory} = useSelector((state) => state.auth)
   
@@ -85,11 +85,36 @@ const thisMonthUploads = useMemo(() => {
   return (
     <div className="dashboard-home">
       {/* Alert Badge */}
-      <div className="alert-badge">
-    
-{loading?<p>Loading your alert ..</p>:<p > 🔔 You've sold {thisMonthSoldCount}  content this month worth of #{thisMonthEarnings.toLocaleString()}</p>}
+      {/* Main Alert */}
+{showAlert && (
+  <div className="alert-badge">
+    <span>
+      {loading ? (
+        <p>Loading your alert...</p>
+      ) : (
+        <p>🔔 You've sold {thisMonthSoldCount} content this month worth ₦{thisMonthEarnings.toLocaleString()}</p>
+      )}
+    </span>
 
-      </div>
+    <button className="alert-close" onClick={() => setShowAlert(false)}>
+      ✕
+    </button>
+  </div>
+)}
+
+{/* New Features Alert */}
+{showFeatureAlert && (
+  <div className="alert-badge feature">
+    <span>
+      🚀 New Feature: You can now upload up to **three 60-second videos** and earn even more!<a href="/uplaod-content"> Upload now !</a>
+    </span>
+
+    <button className="alert-close" onClick={() => setShowFeatureAlert(false)}>
+      ✕
+    </button>
+  </div>
+)}
+
 
      {/* Balance Section */}
 <div className="balance-section">

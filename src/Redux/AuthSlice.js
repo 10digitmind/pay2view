@@ -45,21 +45,7 @@ const authSlice = createSlice({
         state.error = action.payload;
       })
 
-      // create user
-        .addCase(createUser.pending, (state) => {
-        state.loading = true;
-        state.error = null;
-      })
-      .addCase(createUser.fulfilled, (state, action) => {
-        state.loading = false;
-        state.user = action.payload.user;
-        state.token = action.payload.token;
-      })
-      .addCase(createUser.rejected, (state, action) => {
-        state.loading = false;
-        state.error = action.payload;
-      })
-//get user profile
+ 
 
        .addCase(getCurrentUser.pending, (state) => {
         state.loading = true;

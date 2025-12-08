@@ -18,6 +18,7 @@ const UploadContent = ({setActiveTab}) => {
   const [uploading, setUploading] = useState(false);
   const [uploadSuccess, setUploadSuccess] = useState(false);
   const [uploadedContent, setUploadedContent] = useState(null);
+const [uploadProgress, setUploadProgress] = useState(0);
 
 
   const token = localStorage.getItem("authToken");
@@ -30,24 +31,63 @@ const UploadContent = ({setActiveTab}) => {
     }
   }, [token, dispatch]);
 
-  const handleFileChange = (e) => {
-    const selectedFile = e.target.files[0];
-    if (!selectedFile) return;
+const handleFileChange = (e) => {
+  const file = e.target.files[0];
+  if (!file) return;
 
-    const validTypes = ["image/jpeg", "image/png", "image/jpg", "application/pdf"];
-    if (!validTypes.includes(selectedFile.type)) {
-      toast.error("Only JPG, PNG, and PDF files are supported.");
-      return;
-    }
+  setFile(file);
 
-    setFile(selectedFile);
+  // IMAGE PREVIEW
+  if (file.type.startsWith("image/")) {
+    const url = URL.createObjectURL(file);
+    setPreviewUrl(url);
+    return;
+  }
 
-    if (selectedFile.type.startsWith("image")) {
-      setPreviewUrl(URL.createObjectURL(selectedFile));
-    } else {
-      setPreviewUrl(null);
-    }
-  };
+  // VIDEO PREVIEW + DURATION VALIDATION
+  if (file.type.startsWith("video/")) {
+    const url = URL.createObjectURL(file);
+    setPreviewUrl(url);
+
+    const video = document.createElement("video");
+    video.preload = "metadata";
+
+    video.onloadedmetadata = () => {
+      window.URL.revokeObjectURL(video.src);
+      const duration = video.duration;
+
+    
+
+      if (duration < 10) {
+        toast.error("Video must be at least 10 seconds long.");
+        setFile(null);
+        setPreviewUrl(null);
+        return;
+      }
+
+      if (duration > 60) {
+        toast.error("Video cannot exceed 60 seconds.");
+        setFile(null);
+        setPreviewUrl(null);
+        return;
+      }
+
+      // Mark file as duration-validated (optional)
+      file.validDuration = true;
+     
+    };
+
+    video.src = url;
+    return;
+  }
+
+  // PDF PREVIEW
+  if (file.type === "application/pdf") {
+    setPreviewUrl(null);
+    return;
+  }
+};
+
 
   const removeFile = () => {
     setFile(null);
@@ -79,38 +119,68 @@ const UploadContent = ({setActiveTab}) => {
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!file || !title || !description || !price) {
-      toast.error("Please complete all fields before submitting.");
-      return;
-    }
+const handleSubmit = async (e) => {
+  e.preventDefault();
 
-    const formData = new FormData();
-    formData.append("image", file);
-    formData.append("title", title);
-    formData.append("description", description);
-    formData.append("price", price);
+  if (!file || !title || !description || !price) {
+    toast.error("Please complete all fields before submitting.");
+    return;
+  }
 
-    try {
-      setUploading(true);
-      const res = await axios.post(`${API_URL}/upload-content`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${token}`,
-        },
+  const formData = new FormData();
+  formData.append("image", file);
+  formData.append("title", title);
+  formData.append("description", description);
+  formData.append("price", price);
+
+  try {
+    setUploading(true);
+    setUploadProgress(0);
+
+    // Start an interval to simulate progress while waiting for server
+    const simulateProgress = setInterval(() => {
+      setUploadProgress((prev) => {
+        if (prev >= 90) return 90; // never go beyond 90% until server responds
+        return prev + 1; // increment slowly
       });
+    }, 300); // adjust speed (ms)
 
+    const res = await axios.post(`${API_URL}/upload-content`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${token}`,
+      },
+      onUploadProgress: (progressEvent) => {
+        const percentCompleted = Math.round(
+          (progressEvent.loaded * 100) / progressEvent.total
+        );
+        // Use smaller of real progress or simulated cap (max 90)
+        setUploadProgress(Math.min(percentCompleted, 90));
+      },
+    });
+
+    // Server responded → upload fully done
+    clearInterval(simulateProgress);
+    setUploadProgress(100); // finally reach 100%
+
+    // Optional: short delay for smooth UX
+    setTimeout(() => {
       setUploadedContent(res.data.content);
       setUploadSuccess(true);
       toast.success("Content uploaded successfully!");
-    } catch (err) {
-      console.error(err);
-      toast.error(err.response?.data?.error || "Upload failed. Try again.");
-    } finally {
       setUploading(false);
-    }
-  };
+      setUploadProgress(0);
+    }, 500);
+  } catch (err) {
+    console.error(err);
+    setUploading(false);
+    setUploadProgress(0);
+    toast.error(err.response?.data?.error || "Upload failed. Try again.");
+  }
+};
+
+
+
 
   // UI
   if (uploadSuccess && uploadedContent) {
@@ -144,11 +214,11 @@ const UploadContent = ({setActiveTab}) => {
           <label htmlFor="file-upload" className="upload-box">
             <FaUpload className="upload-icon" />
             <p>Click to select a file </p>
-            <small>Supported: JPG, PNG, PDF</small>
+            <small>Supported: JPG, PNG, PDF,mp4,.mov,.mkv</small>
             <input
               id="file-upload"
               type="file"
-              accept=".jpg,.jpeg,.png,.pdf"
+              accept=".jpg,.jpeg,.png,.pdf,.mp4,.mov,.mkv,.webm"
               onChange={handleFileChange}
          
               hidden
@@ -160,13 +230,29 @@ const UploadContent = ({setActiveTab}) => {
           <div className="file-preview">
             <div className="preview-content">
               {previewUrl ? (
-                <img src={previewUrl} alt="Preview" className="preview-image" />
-              ) : (
-                <div className="pdf-preview">
-                  <FaFilePdf className="pdf-icon" />
-                  <span>{file.name}</span>
-                </div>
-              )}
+  file.type.startsWith("video/") ? (
+    <video
+      src={previewUrl}
+      className="preview-image"
+      controls
+      width="250"
+    />
+  ) : (
+    <img src={previewUrl} alt="Preview" className="preview-image" />
+  )
+) : (
+  file.type === "application/pdf" ? (
+    <div className="pdf-preview">
+      <FaFilePdf className="pdf-icon" />
+      <span>{file.name}</span>
+    </div>
+  ) : (
+    <div className="file-name-preview">
+      <span>{file.name}</span>
+    </div>
+  )
+)}
+
               <button type="button" className="remove-btn" onClick={removeFile}>
                 <FaTimes />
               </button>
@@ -207,11 +293,21 @@ const UploadContent = ({setActiveTab}) => {
         <p style={{ fontSize: "12px" }}>
           Set a fair price for your content (₦1 - ₦1,000,000)
         </p>
+{uploading && (
+  <div className="upload-progress-bar">
+    <div
+      className="progress-fill"
+      style={{ width: `${uploadProgress}%` }}
+    />
+    <span>{uploadProgress}%</span>
+  </div>
+)}
 
         <button
           type="submit"
           className="upload-submit-btn"
           disabled={uploading}
+          style={{ opacity: uploading ? 0.6 : 1, cursor: uploading ? 'not-allowed' : 'pointer' }}
         >
           {uploading ? "Uploading please wait..." : <><FaCheck className="btn-icon" /> Upload Content</>}
         </button>

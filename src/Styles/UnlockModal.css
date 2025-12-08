@@ -45,6 +45,8 @@
   height: 80px;
   object-fit: cover;
   border-radius: 8px;
+  opacity: 0.2;
+  
 }
 
 .modal-content-info h2 {

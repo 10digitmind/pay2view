@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { FaEye, FaEllipsisV, FaShieldAlt } from "react-icons/fa";
 import "../Styles/ContentTab.css";
 import { useNavigate } from "react-router-dom";
@@ -24,9 +24,13 @@ const { content} = useSelector((state) => state.auth)
     setMenuOpen(menuOpen === id ? null : id);
   };
 
-  // Fetch user content from API
 
 
+
+
+const isVideo = (url) => {
+  return url.includes("videodelivery.net");
+};
   const handleDelete = async (contentId) => {
     ;
 setMenuOpen(null)
@@ -65,103 +69,138 @@ setMenuOpen(null)
         );
       }
     }
+
+    
   };
-
-  return (
-    <div className="content-page">
-      {/* Header */}
-      <div className="content-header">
-        <h2>My Content</h2>
-        <button
-          onClick={() => navigate("/uplaod-content")}
-          className="upload-btn"
-        >
-          + Upload New Content
-        </button>
-      </div>
-
-      {/* Loading State */}
-      {loading && <p>Loading content...</p>}
-
-      {/* Content Cards */}
-      <div className="content-grid">
-        {content.length > 0
-          ? content.map((item) => (
-              <div className="content-card" key={item._id}>
-                <img
-                  src={item.full_url.endsWith(".pdf")?item.preview_url:item.full_url}
-                  alt={item.title}
-                  className="content-img"
-                />
-                <div className="content-details">
-                  <h3>{item.title}</h3>
-                  <p className="price">₦{(item.price ).toLocaleString()}</p>
-                  <div className="stats-content">
-                    <span>
-                      <FaEye /> {item.viewCount || 0}
-                    </span>
-                    <span>Sold: {item.soldCount || 0}</span>
-                  </div>
-                  <p style={{ fontSize: "13px", textTransform: "capitalize" }}>
-                    {item.description}
-                  </p>
-                </div>
-
-                {/* Share to Earn Button */}
-                <button
-                  className="share-btn"
-                  onClick={() => {
-                    navigator.clipboard.writeText(item.shareLink.trim().replace(/\s+/g, '%20'));
-                    toast.success("Share link copied! Earn when someone buys.");
-                  }}
-                >
-                  <FaShieldAlt className="share-icon" /> Share to Earn
-                </button>
-
-                {/* 3-dot Menu */}
-                <div className="menu-wrapper">
-                  <FaEllipsisV
-                    className="menu-icon"
-                    onClick={() => toggleMenu(item._id)}
-                    color="black"
-                    size={22}
-                  />
-                  {menuOpen === item._id && (
-                    <div className="menu-dropdown">
-                      <button onClick={() => handleDelete(item._id)}>
-                        Delete
-                      </button>
-                    </div>
-                  )}
-                </div>
-              </div>
-            ))
-          : !loading &&   <div
-      style={{
-        width: "100%",
-        height: "40vh",
-        backgroundColor: "#f8f8f8",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        border: "2px solid #ccc",
-        borderRadius: "12px",
-        textAlign: "center",
-        padding: "20px",
-        boxShadow:"0 5px 20px rgba(0,0,0,0.2)",
-        cursor:"pointer"
-      }}
-      onClick={() => navigate("/uplaod-content")}
-    >
-      <FiUpload size={48}   color="#888" style={{ marginBottom: "16px" }} />
-      <p style={{ fontSize: "16px", color: "#000000ff", maxWidth: "300px" }}>
-        No content uploaded yet. Upload and start earning money!
-      </p>
-    </div>}
-      </div>
+return (
+  <div className="content-page">
+    {/* Header */}
+    <div className="content-header">
+      <h2>My Content</h2>
+      <button
+        onClick={() => navigate("/uplaod-content")}
+        className="upload-btn"
+      >
+        + Upload New Content
+      </button>
     </div>
-  );
+
+    {/* Loading State */}
+    {loading && <p>Loading content...</p>}
+
+    {/* Content Cards */}
+    <div className="content-grid">
+      {content.length > 0 ? (
+        content.map((item) => (
+          <div className="content-card" key={item._id}>
+  {/* MEDIA PREVIEW */}
+  {item.preview_url && item.preview_url.includes("videodelivery.net") ? (
+    // VIDEO PREVIEW using Cloudflare Stream
+    <video
+      src={`https://videodelivery.net/${item.full_url}/manifest/video.m3u8`}
+      controls
+      className="content-img"
+      style={{ background: "#000" ,height:'auto'}}
+      
+    />
+  ) : item.full_url.endsWith(".pdf") ? (
+    // PDF PREVIEW
+    item.preview_url ? (
+      <img src={item.preview_url} alt={item.title} className="content-img" />
+    ) : (
+      <div
+        style={{
+          height: "200px",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          background: "#f4f4f4",
+          borderRadius: "10px",
+          fontSize: "18px",
+        }}
+      >
+        📄 PDF File
+      </div>
+    )
+  ) : (
+    // IMAGE PREVIEW
+    <img src={item.full_url} alt={item.title} className="content-img" />
+  )}
+
+  {/* CONTENT DETAILS */}
+  <div className="content-details">
+    <h3>{item.title}</h3>
+    <p className="price">₦{item.price.toLocaleString()}</p>
+    <div className="stats-content">
+      <span>
+        <FaEye /> {item.viewCount || 0}
+      </span>
+      <span>Sold: {item.soldCount || 0}</span>
+    </div>
+    <p style={{ fontSize: "13px", textTransform: "capitalize" }}>
+      {item.description}
+    </p>
+  </div>
+
+  {/* Share to Earn */}
+  <button
+    className="share-btn"
+    onClick={() => {
+      navigator.clipboard.writeText(item.shareLink.trim().replace(/\s+/g, "%20"));
+      toast.success("Share link copied! Earn when someone buys.");
+    }}
+  >
+    <FaShieldAlt className="share-icon" /> Share to Earn
+  </button>
+
+  {/* MENU */}
+  <div className="menu-wrapper">
+    <FaEllipsisV
+      className="menu-icon"
+      onClick={() => toggleMenu(item._id)}
+      color="black"
+      size={22}
+    />
+    {menuOpen === item._id && (
+      <div className="menu-dropdown">
+        <button onClick={() => handleDelete(item._id)}>Delete</button>
+      </div>
+    )}
+  </div>
+</div>
+
+        ))
+      ) : (
+        !loading && (
+          <div
+            style={{
+              width: "100%",
+              height: "40vh",
+              backgroundColor: "#f8f8f8",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              border: "2px solid #ccc",
+              borderRadius: "12px",
+              textAlign: "center",
+              padding: "20px",
+              boxShadow: "0 5px 20px rgba(0,0,0,0.2)",
+              cursor: "pointer",
+            }}
+            onClick={() => navigate("/uplaod-content")}
+          >
+            <FiUpload size={48} color="#888" style={{ marginBottom: "16px" }} />
+            <p style={{ fontSize: "16px", color: "#000000ff", maxWidth: "300px" }}>
+              No content uploaded yet. Upload and start earning money!
+            </p>
+          </div>
+        )
+      )}
+    </div>
+  </div>
+);
+
 }
 
 export default ContentTab;

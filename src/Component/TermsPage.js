@@ -85,9 +85,11 @@ export default function TermsPage() {
         <h2>6. Payment Terms</h2>
         <p>All transactions are processed in Nigerian Naira (₦) unless otherwise specified.</p>
 <p>
-  A payment processing fee of 10% applies to each sale and will be deducted upon creator withdrawals.
+  A payment processing fee of 10% applies to each sale  of images and pdf files and will be deducted upon creator withdrawals.
 </p>
-
+<p>
+  A payment processing fee of 20% applies to each sale on videos  and will be deducted upon creator withdrawals.
+</p>
         <p>Creator payouts are subject to minimum thresholds and processing schedules.</p>
         <p>All sales are final unless otherwise specified in our refund policy.</p>
         <p>We use secure third-party payment processors and do not store payment information.</p>
