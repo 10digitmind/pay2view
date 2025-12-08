@@ -7,6 +7,8 @@ import { useDispatch } from "react-redux";
 import { getCurrentUser } from "../Redux/Asyncthunk";
 
 const API_URL =process.env.REACT_APP_API_URL 
+
+
 const EmailVerificationLanding = () => {
   const [status, setStatus] = useState("loading"); // loading | success | error
   const [message, setMessage] = useState("");
@@ -17,39 +19,50 @@ const dispatch = useDispatch()
     const query = new URLSearchParams(useLocation().search);
   // Call verify-email API
   useEffect(() => {
-    const verifyEmail = async () => {
-  const token = query.get("token");
+  let mounted = true;
+  const verifyEmail = async () => {
+    const token = decodeURIComponent(query.get("token")?.trim());
 
-      if (!token) {
-        setStatus("error");
-        setMessage("Invalid verification link.");
-        return;
-      }
-     
-      try {
-        const res = await axios.post(`${API_URL}/verify-email?token=${token}`);
-    
-        setStatus("success");
-        setMessage(res.data.message);
-        toast.success(res.data.message);
- await dispatch(getCurrentUser())
-        // Store JWT for login
-        if (res.data.token) localStorage.setItem("authToken", res.data.token);
-        const now = Date.now()
- const expiresAt = now + 24 * 60 *60 * 1000; 
+    if (!token) {
+      if (!mounted) return;
+      setStatus("error");
+      setMessage("Invalid verification link.");
+      return;
+    }
+
+    try {
+      const res = await axios.get(`${API_URL}/verify-email?token=${token}`);
+      if (!mounted) return;
+
+      setStatus("success");
+      setMessage(res.data.message);
+      toast.success(res.data.message);
+      await dispatch(getCurrentUser());
+
+      if (res.data.token) {
+        localStorage.setItem("authToken", res.data.token);
+        const now = Date.now();
+        const expiresAt = now + 24 * 60 * 60 * 1000;
         localStorage.setItem("expiresAt", expiresAt);
-        // Optional: redirect after 3 seconds
-        setTimeout(() => navigate("/dashboard"), 3000);
-      } catch (err) {
-        const errMsg = err.response?.data?.message || "Verification failed.";
-        setStatus("error");
-        setMessage(errMsg);
-        toast.error(errMsg);
       }
-    };
 
-    verifyEmail();
-  }, [location.search, navigate]);
+      setTimeout(() => navigate("/dashboard"), 3000);
+    } catch (err) {
+      if (!mounted) return;
+      const errMsg = err.response?.data?.message || err.message || "Verification failed.";
+      setStatus("error");
+      setMessage(errMsg);
+      toast.error(errMsg);
+    }
+  };
+
+  verifyEmail();
+
+  return () => {
+    mounted = false;
+  };
+}, [location.search, navigate]);
+
 
   return (
     <div

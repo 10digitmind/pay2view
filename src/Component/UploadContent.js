@@ -173,9 +173,10 @@ const handleSubmit = async (e) => {
     }, 500);
   } catch (err) {
     console.error(err);
+
     setUploading(false);
     setUploadProgress(0);
-    toast.error(err.response?.data?.error || "Upload failed. Try again.");
+    toast.error(err.response?.data || "Upload failed. Try again.");
   }
 };
 
