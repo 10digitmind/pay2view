@@ -35,22 +35,31 @@ const isVideo = (item) => {
 
 
 useEffect(() => {
+  if (!content || content?.length === 0) return;
 
-  console.log(content)
-  console.log('res')
-  const videoUrls = content
-    .filter(item => isVideo(item))
+  // Filter videos that are NOT ready in DB
+  const videosToCheck = content
+    .filter(item => isVideo(item) && !item.isReady)
     .map(item => item.full_url);
 
-  if (videoUrls.length === 0) return;
+  if (videosToCheck?.length === 0) {
+    // All videos are ready, set them in the map
+    const readyMap = {};
+    content.forEach(item => {
+      if (isVideo(item)) readyMap[item?.full_url] = true;
+    });
+    setVideoReadyMap(readyMap);
+    return;
+  }
 
   const pollVideos = async () => {
     try {
-      const res = await axios.post(`${API_URL}/check-video-status`, { videos: videoUrls });
+      const res = await axios.post(`${API_URL}/check-video-status`, { videos: videosToCheck });
 
       setVideoReadyMap(prev => {
         const updated = { ...prev };
         res.data.results.forEach(v => {
+          // Use full_url as key
           updated[v.id] = v.ready;
         });
         return updated;
@@ -68,6 +77,7 @@ useEffect(() => {
 
   pollVideos();
 }, [content]);
+
 
 
 
@@ -135,19 +145,27 @@ return (
 
     {/* Content Cards */}
     <div className="content-grid">
-      {content.length > 0 ? (
+      {content?.length > 0 ? (
         content.map((item) => (
           <div className="content-card" key={item._id}>
   {/* MEDIA PREVIEW */}
   
 {isVideo(item) ? (
-  !videoReadyMap[(item.full_url)] ? (
-   <div id="content-area">
-            <div className="nice-loader">
-              <div className="spinner"></div>
-              <p style={{ color: "black" }}>prcessing video please wait...</p>
-            </div>
-          </div>
+  !item.isReady && !videoReadyMap[item.full_url] ? (
+    <div
+      style={{
+        height: "200px",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        background: "#000",
+        color: "#fff",
+        borderRadius: "10px",
+        fontSize: "16px",
+      }}
+    >
+      Processing video... please wait
+    </div>
   ) : (
     <video
       src={`https://videodelivery.net/${item.full_url}/manifest/video.m3u8`}
@@ -177,6 +195,7 @@ return (
 ) : (
   <img src={item.full_url} alt={item.title} className="content-img" />
 )}
+
 
 
 
