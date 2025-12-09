@@ -6,6 +6,9 @@ import { getCurrentUser } from "../Redux/Asyncthunk";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { compressVideo } from "../utils/compressVideo";
+import imageCompression from "browser-image-compression";
+
 const API_URL =process.env.REACT_APP_API_URL 
 
 const UploadContent = ({setActiveTab}) => {
@@ -119,6 +122,8 @@ const handleFileChange = (e) => {
     }
   };
 
+
+
 const handleSubmit = async (e) => {
   e.preventDefault();
 
@@ -127,23 +132,31 @@ const handleSubmit = async (e) => {
     return;
   }
 
-  const formData = new FormData();
-  formData.append("image", file);
-  formData.append("title", title);
-  formData.append("description", description);
-  formData.append("price", price);
+  let uploadFile = file;
 
   try {
+    // Only compress images; leave videos and other files as-is
+    if (file.type.startsWith("image")) {
+      uploadFile = await imageCompression(file, {
+        maxSizeMB: 0.5,
+        maxWidthOrHeight: 1280,
+        useWebWorker: true,
+      });
+    }
+
+    const formData = new FormData();
+    formData.append("image", uploadFile); // field name must match Multer backend
+    formData.append("title", title);
+    formData.append("description", description);
+    formData.append("price", price);
+
     setUploading(true);
     setUploadProgress(0);
 
-    // Start an interval to simulate progress while waiting for server
+    // Simulate progress
     const simulateProgress = setInterval(() => {
-      setUploadProgress((prev) => {
-        if (prev >= 90) return 90; // never go beyond 90% until server responds
-        return prev + 1; // increment slowly
-      });
-    }, 300); // adjust speed (ms)
+      setUploadProgress((prev) => (prev >= 90 ? 90 : prev + 1));
+    }, 100);
 
     const res = await axios.post(`${API_URL}/upload-content`, formData, {
       headers: {
@@ -154,16 +167,13 @@ const handleSubmit = async (e) => {
         const percentCompleted = Math.round(
           (progressEvent.loaded * 100) / progressEvent.total
         );
-        // Use smaller of real progress or simulated cap (max 90)
         setUploadProgress(Math.min(percentCompleted, 90));
       },
     });
 
-    // Server responded → upload fully done
     clearInterval(simulateProgress);
-    setUploadProgress(100); // finally reach 100%
+    setUploadProgress(100);
 
-    // Optional: short delay for smooth UX
     setTimeout(() => {
       setUploadedContent(res.data.content);
       setUploadSuccess(true);
@@ -173,12 +183,12 @@ const handleSubmit = async (e) => {
     }, 500);
   } catch (err) {
     console.error(err);
-
     setUploading(false);
     setUploadProgress(0);
     toast.error(err.response?.data || "Upload failed. Try again.");
   }
 };
+
 
 
 
