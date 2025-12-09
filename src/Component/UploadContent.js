@@ -21,6 +21,8 @@ const UploadContent = ({setActiveTab}) => {
   const [uploading, setUploading] = useState(false);
   const [uploadSuccess, setUploadSuccess] = useState(false);
   const [uploadedContent, setUploadedContent] = useState(null);
+ 
+const [removebtn, setRemovebtn] = useState(true);
 const [uploadProgress, setUploadProgress] = useState(0);
 
 
@@ -127,11 +129,12 @@ const handleFileChange = (e) => {
 const handleSubmit = async (e) => {
   e.preventDefault();
 
+
   if (!file || !title || !description || !price) {
     toast.error("Please complete all fields before submitting.");
     return;
   }
-
+setRemovebtn(false)
   let uploadFile = file;
 
   try {
@@ -177,10 +180,11 @@ const handleSubmit = async (e) => {
     setTimeout(() => {
       setUploadedContent(res.data.content);
       setUploadSuccess(true);
+      setRemovebtn(true)
       toast.success("Content uploaded successfully!");
       setUploading(false);
       setUploadProgress(0);
-    }, 500);
+    }, 100);
   } catch (err) {
     console.error(err);
     setUploading(false);
@@ -264,9 +268,9 @@ const handleSubmit = async (e) => {
   )
 )}
 
-              <button type="button" className="remove-btn" onClick={removeFile}>
+             {removebtn? <button type="button" className="remove-btn" onClick={removeFile}>
                 <FaTimes />
-              </button>
+              </button>:''}
             </div>
           </div>
         )}

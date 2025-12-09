@@ -206,18 +206,19 @@
 }
 .upload-progress-bar {
   width: 100%;
-  background: #f1f1f1;
-  border-radius: 6px;
-  margin-top: 10px;
-  position: relative;
+  background-color: #eee;
+  border-radius: 8px;
+  overflow: hidden;
   height: 20px;
+  margin-bottom: 1rem;
+  position: relative;
 }
 
 .progress-fill {
-  background: #4caf50;
+  background-color: #014f20;
   height: 100%;
-  border-radius: 6px;
-  transition: width 0.3s ease;
+  width: 0%;
+  transition: width 0.2s ease;
 }
 
 .upload-progress-bar span {
@@ -226,6 +227,7 @@
   left: 50%;
   transform: translateX(-50%);
   font-size: 12px;
-  line-height: 20px;
   color: #fff;
+  line-height: 20px;
+  font-weight: bold;
 }

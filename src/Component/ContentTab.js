@@ -13,6 +13,9 @@ const API_URL =process.env.REACT_APP_API_URL
 
 function ContentTab() {
   const [menuOpen, setMenuOpen] = useState(null);
+const [videoStatuses, setVideoStatuses] = useState([]);
+const [videoReadyMap, setVideoReadyMap] = useState({});
+
 
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
@@ -24,13 +27,55 @@ const { content} = useSelector((state) => state.auth)
     setMenuOpen(menuOpen === id ? null : id);
   };
 
-
-
-
-
-const isVideo = (url) => {
-  return url.includes("videodelivery.net");
+const isVideo = (item) => {
+  if (!item || !item.preview_url) return false;
+  return item.preview_url.includes("videodelivery.net");
 };
+
+
+
+useEffect(() => {
+
+  console.log(content)
+  console.log('res')
+  const videoUrls = content
+    .filter(item => isVideo(item))
+    .map(item => item.full_url);
+
+  if (videoUrls.length === 0) return;
+
+  const pollVideos = async () => {
+    try {
+      const res = await axios.post(`${API_URL}/check-video-status`, { videos: videoUrls });
+
+      setVideoReadyMap(prev => {
+        const updated = { ...prev };
+        res.data.results.forEach(v => {
+          updated[v.id] = v.ready;
+        });
+        return updated;
+      });
+
+      const allReady = res.data.results.every(v => v.ready === true);
+      if (!allReady) {
+        setTimeout(pollVideos, 3000);
+      }
+    } catch (error) {
+      console.error("Polling error:", error);
+      setTimeout(pollVideos, 5000);
+    }
+  };
+
+  pollVideos();
+}, [content]);
+
+
+
+
+
+
+
+
   const handleDelete = async (contentId) => {
     ;
 setMenuOpen(null)
@@ -94,38 +139,46 @@ return (
         content.map((item) => (
           <div className="content-card" key={item._id}>
   {/* MEDIA PREVIEW */}
-  {item.preview_url && item.preview_url.includes("videodelivery.net") ? (
-    // VIDEO PREVIEW using Cloudflare Stream
+  
+{isVideo(item) ? (
+  !videoReadyMap[(item.full_url)] ? (
+   <div id="content-area">
+            <div className="nice-loader">
+              <div className="spinner"></div>
+              <p style={{ color: "black" }}>prcessing video please wait...</p>
+            </div>
+          </div>
+  ) : (
     <video
       src={`https://videodelivery.net/${item.full_url}/manifest/video.m3u8`}
       controls
       className="content-img"
-      style={{ background: "#000" ,height:'auto'}}
-      
+      style={{ background: "#000", height: "auto" }}
     />
-  ) : item.full_url.endsWith(".pdf") ? (
-    // PDF PREVIEW
-    item.preview_url ? (
-      <img src={item.preview_url} alt={item.title} className="content-img" />
-    ) : (
-      <div
-        style={{
-          height: "200px",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          background: "#f4f4f4",
-          borderRadius: "10px",
-          fontSize: "18px",
-        }}
-      >
-        📄 PDF File
-      </div>
-    )
+  )
+) : item.full_url.endsWith(".pdf") ? (
+  item.preview_url ? (
+    <img src={item.preview_url} alt={item.title} className="content-img" />
   ) : (
-    // IMAGE PREVIEW
-    <img src={item.full_url} alt={item.title} className="content-img" />
-  )}
+    <div
+      style={{
+        height: "200px",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        background: "#f4f4f4",
+        borderRadius: "10px",
+        fontSize: "18px",
+      }}
+    >
+      📄 PDF File
+    </div>
+  )
+) : (
+  <img src={item.full_url} alt={item.title} className="content-img" />
+)}
+
+
 
   {/* CONTENT DETAILS */}
   <div className="content-details">
