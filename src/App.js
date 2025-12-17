@@ -27,6 +27,7 @@ import ContactPage from './Component/ContactPage';
 import FaqPage from './Component/FaqPage';
 import TermsPage from './Component/TermsPage';
 import PrivacyPolicyPage from './Component/PrivacyPolicyPage';
+import CreatorHub from './Component/CreatorHub';
 
 
 
@@ -72,11 +73,13 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
              <Route path="/email-verification-sent/:email" element={<VerifyEmailPage />} />
      <Route path="/verify-email" element={<EmailVerificationLanding />} />
+      
    
         <Route path="/reset-password/:token" element={<ResetPassword />} />
          </Route>
   
  <Route path="/view-content/:title/:id" element={<ViewContent />} />
+  <Route path="/creator/:username" element={<CreatorHub />} />
      <Route path="/payment-verification" element={<PaymentVerification />} />
           <Route path="/about-us" element={<AboutPage />} />
                  <Route path="/contact" element={<ContactPage />} />

@@ -202,7 +202,7 @@ useEffect(() => {
         {!videoReady && content?.videoUrl && (
           <div id="content-area">
             <div className="nice-loader">
-              <div className="spinner"></div>
+            
               <p style={{ color: "white" }}>Loading snippet...</p>
             </div>
           </div>
@@ -212,7 +212,7 @@ useEffect(() => {
         {content?.videoUrl && (
           <video
             ref={videoRef}
-            src={videoSrc}
+            src={videoSrc} 
             className="preview-img"
             muted
             controls={false}

@@ -15,6 +15,8 @@ function ContentTab() {
   const [menuOpen, setMenuOpen] = useState(null);
 const [videoStatuses, setVideoStatuses] = useState([]);
 const [videoReadyMap, setVideoReadyMap] = useState({});
+const [showCreatorHubModal, setShowCreatorHubModal] = useState(true);
+  const { user } = useSelector((state) => state.auth);
 
 
   const [loading, setLoading] = useState(false);
@@ -31,6 +33,7 @@ const isVideo = (item) => {
   if (!item || !item.preview_url) return false;
   return item.preview_url.includes("videodelivery.net");
 };
+
 
 
 
@@ -139,6 +142,65 @@ return (
         + Upload New Content
       </button>
     </div>
+
+
+{showCreatorHubModal && (
+  <div className="modal-backdrop">
+    <div className="modal-content">
+      <h3>Welcome to Your Creator Hub!</h3>
+      <p>
+        Here you can share <strong>all your uploaded content at once</strong> and also share your social media links with your followers.
+      </p>
+
+      <div className="modal-actions">
+        {/* Copy Creator Hub link */}
+        <button
+          className="copy-btn"
+          onClick={() => {
+            const creatorHubLink = `${window.location.origin}/creator/${user.username}`;
+            navigator.clipboard.writeText(creatorHubLink);
+            toast.success("Creator Hub link copied!");
+          }}
+        >
+          Copy Creator Hub Link
+        </button>
+
+        {/* View Creator Hub */}
+        <a
+          href={`/creator/${user.username}`}
+          target="_blank"
+          rel="noreferrer"
+          className="view-hub-link"
+        >
+          See Your Hub
+        </a>
+
+        {/* Edit Profile if bio/social not set */}
+        {(!user.bio || !user.social?.facebook) && (
+          <button
+            className="edit-profile-btn"
+            onClick={() => {
+              navigate("/edit-profile");
+              setShowCreatorHubModal(false);
+            }}
+          >
+            Update Bio & Social Media
+          </button>
+        )}
+
+        {/* Close modal */}
+        <button
+          className="info-hub-btn"
+          onClick={() => setShowCreatorHubModal(false)}
+        >
+          Close info 
+        </button>
+      </div>
+    </div>
+  </div>
+)}
+
+
 
     {/* Loading State */}
     {loading && <p>Loading content...</p>}

@@ -1,0 +1,252 @@
+/* ROOT */
+.pch-container {
+  background: #0f0f0f;
+  color: #f5f5f5;
+  min-height: 100vh;
+  padding: 2rem;
+  font-family: "Inter", system-ui, sans-serif;
+}
+
+/* CREATOR INFO */
+.pch-creator-info {
+  background: #161616;
+  border-radius: 10px;
+  padding: 2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+}
+
+.pch-creator-pic {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #2ecc71;
+  margin-bottom: 1rem;
+}
+
+.pch-creator-info h2 {
+  font-size: 1.4rem;
+  margin-bottom: .5rem;
+}
+
+.pch-creator-info p {
+  color: #bdbdbd;
+  font-size: .95rem;
+}
+
+/* SOCIALS */
+.pch-socials {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.pch-socials a {
+  color: #ccc;
+  font-size: 1.2rem;
+  transition: color .3s;
+}
+
+.pch-socials a:hover {
+  color: #2ecc71;
+}
+
+/* FILTER BAR */
+.pch-filter-bar {
+  display: flex;
+  gap: .75rem;
+  margin-bottom: 2rem;
+  justify-content: center;
+}
+
+.pch-filter-btn {
+  padding: .5rem 1.2rem;
+  background: transparent;
+  border: 1px solid #2ecc71;
+  color: #f5f5f5;
+  border-radius: 999px;
+  cursor: pointer;
+  font-size: .85rem;
+  transition: all .3s ease;
+}
+
+.pch-filter-btn:hover,
+.pch-filter-btn.active {
+  background: #2ecc71;
+  color: #0f0f0f;
+}
+
+/* GRID */
+.pch-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+/* CARD */
+.pch-card {
+    display: flex;
+  flex-direction: column;
+  justify-content: space-between; /* this pushes content apart */
+  background: #1b1b1b;
+  border-radius-: 10px;
+  overflow: hidden;
+  transition: transform .3s ease, box-shadow .3s ease;
+  box-shadow: 0 8px 25px rgba(0,0,0,.5);
+  height: 100%;
+}
+
+.pch-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 35px rgba(0,0,0,.8);
+}
+
+/* MEDIA */
+.pch-media {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.pch-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.pch-video-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.pch-video-wrapper iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  object-fit: cover; /* makes CF Stream fill container */
+}
+
+.pch-processing {
+  color: #aaa;
+  font-size: .9rem;
+}
+
+/* DETAILS */
+.pch-details {
+  padding: 1rem;
+}
+
+.pch-details h4 {
+  font-size: .95rem;
+  margin-bottom: .4rem;
+}
+
+.pch-price {
+  color: #2ecc71;
+  font-weight: 600;
+  margin-bottom: .6rem;
+}
+
+.pch-stats {
+  display: flex;
+  justify-content: space-between;
+  font-size: .75rem;
+  color: #9e9e9e;
+}
+
+/* SHARE */
+.pch-share-btn {
+  width: calc(100% - 2rem);
+  margin: 1rem;
+  padding: .6rem;
+  border-radius: 12px;
+  background: #111;
+  border: 1px solid #2ecc71;
+  color: #2ecc71;
+  cursor: pointer;
+  font-size: .85rem;
+  transition: all .3s ease;
+}
+
+.pch-share-btn:hover {
+  background: #2ecc71;
+  color: #0f0f0f;
+}
+
+/* EMPTY STATE */
+.pch-empty {
+  text-align: center;
+  color: #777;
+  padding: 4rem 1rem;
+  cursor: pointer;
+}
+
+/* PAY TO VIEW BUTTON */
+.pch-pay-btn {
+  width: 100%;
+  margin-top: 10px;
+  padding: 12px 14px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+
+  background: linear-gradient(135deg, #000000, #000000);
+  border: 2px solid #2ecc71;
+  color: #fff;
+  border-radius: 10px;
+
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+
+  transition: transform 0.15s ease, box-shadow 0.15s ease, opacity 0.15s;
+}
+
+.pch-pay-btn:hover {
+  transform: translateY(-1px);
+  opacity: 0.95;
+}
+
+.pch-pay-btn:active {
+  transform: scale(0.98);
+}
+
+.pch-pay-btn svg {
+  font-size: 16px;
+}
+
+/* RESPONSIVE */
+@media (max-width: 1024px) {
+  .pch-container { padding: 1.5rem; }
+  .pch-grid { gap: 1.2rem; }
+}
+
+@media (max-width: 768px) {
+  .pch-container { padding: 1rem; }
+  .pch-creator-info { padding: 1.5rem; }
+  .pch-creator-pic { width: 90px; height: 90px; }
+  .pch-filter-bar { flex-wrap: wrap; gap: 0.5rem; }
+  .pch-filter-btn { font-size: 0.75rem; padding: 0.45rem 0.9rem; }
+  .pch-details h4 { font-size: 0.9rem; }
+  .pch-price { font-size: 0.95rem; }
+}
+
+@media (max-width: 480px) {
+  .pch-creator-info h2 { font-size: 1.2rem; }
+  .pch-creator-info p { font-size: 0.85rem; }
+  .pch-stats { font-size: 0.7rem; }
+  .pch-share-btn { font-size: 0.75rem; padding: 0.5rem; }
+}

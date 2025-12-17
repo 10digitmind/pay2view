@@ -15,7 +15,7 @@ import parseISO from "date-fns/parseISO";
 const DashboardHome = ({setActiveTab}) => {
   const dispatch = useDispatch()
   const token = localStorage.getItem('authToken')
-
+  const { user } = useSelector((state) => state.auth);
 
   const [showAlert, setShowAlert] = useState(true);
 const [showFeatureAlert, setShowFeatureAlert] = useState(true);
@@ -114,6 +114,28 @@ const thisMonthUploads = useMemo(() => {
     </button>
   </div>
 )}
+
+{showFeatureAlert && (
+  <div className="alert-badge feature">
+    <span>
+      🚀 New Feature: You can now share **all your content at once** along with your social media links and bio!
+      <br />
+      {(!user?.bio || !user?.social) && (
+        <>
+          Please <a href="/edit-profile">update your bio and social media</a> to maximize visibility.
+        </>
+      )}
+      <br />
+<a href={`/creator/${user?.username}`}>See your Hub</a> to view and share everything easily!
+
+    </span>
+
+    <button className="alert-close" onClick={() => setShowFeatureAlert(false)}>
+      ✕
+    </button>
+  </div>
+)}
+
 
 
      {/* Balance Section */}
