@@ -36,6 +36,15 @@ const dispatch = useDispatch()
 const handleSubmit = async (e) => {
   e.preventDefault();
  setLoading(true);
+
+
+
+if (form.amount < 1000) {
+  toast.error("The minimum withdrawal amount is ₦1000.");
+  setLoading(false);
+  return;
+}
+
   try {
     const response = await axios.post(
       `${API_URL}/request-withdrawals`,

@@ -96,7 +96,7 @@ const pay2viewLink = (itemId,itemname) => {
 
       <div className="pch-socials">
         <a
-          href={creator?.social?.twitter || "#"}
+          href={creator?.social?.x || "#"}
           target="_blank"
           rel="noreferrer"
         >
@@ -128,7 +128,7 @@ const pay2viewLink = (itemId,itemname) => {
         </a>
 
          <a
-          href={creator?.social?.snapchat || "#"}
+          href={creator?.social?.tiktok || "#"}
           target="_blank"
           rel="noreferrer"
         >
