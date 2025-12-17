@@ -28,6 +28,8 @@ import FaqPage from './Component/FaqPage';
 import TermsPage from './Component/TermsPage';
 import PrivacyPolicyPage from './Component/PrivacyPolicyPage';
 import CreatorHub from './Component/CreatorHub';
+import ProfileTab from './Component/ProfileTab';
+import ContentTab from './Component/ContentTab';
 
 
 
@@ -91,6 +93,9 @@ function App() {
                <Route element={<AuthRoute />}>
     <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/uplaod-content" element={<UploadContent />} />
+      <Route path="/profile" element={<ProfileTab />} />
+       <Route path="/content" element={<ContentTab />} />
+
 
     </Route>
 

@@ -202,7 +202,7 @@ setRemovebtn(false)
     return (
       <div className="upload-success-container">
         <h2>Content uploaded successfully!</h2>
-        <button onClick={() => navigate('/dashboard')}>
+        <button onClick={() => navigate('/content')}>
           Go to Content
         </button>
         <button

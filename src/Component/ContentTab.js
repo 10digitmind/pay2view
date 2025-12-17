@@ -8,6 +8,7 @@ import Swal from "sweetalert2";
 import { useDispatch, useSelector } from "react-redux";
 import { FiUpload } from "react-icons/fi";
 import { removeContent } from "../Redux/AuthSlice";
+import { getCurrentUser, getUserAccount, getUserContent, getWithdrawalHistory } from "../Redux/Asyncthunk";
 
 const API_URL =process.env.REACT_APP_API_URL 
 
@@ -35,7 +36,14 @@ const isVideo = (item) => {
 };
 
 
-
+  useEffect(() => {
+  if (token) {
+    dispatch(getCurrentUser());
+    dispatch(getUserContent());
+    dispatch(getUserAccount())
+    dispatch(getWithdrawalHistory())
+  }
+}, [token, dispatch]);
 
 useEffect(() => {
   if (!content || content?.length === 0) return;
@@ -157,7 +165,7 @@ return (
         <button
           className="copy-btn"
           onClick={() => {
-            const creatorHubLink = `${window.location.origin}/creator/${user.username}`;
+            const creatorHubLink = `${window.location.origin}/creator/${user?.username}`;
             navigator.clipboard.writeText(creatorHubLink);
             toast.success("Creator Hub link copied!");
           }}
@@ -167,7 +175,7 @@ return (
 
         {/* View Creator Hub */}
         <a
-          href={`/creator/${user.username}`}
+          href={`/creator/${user?.username}`}
           target="_blank"
           rel="noreferrer"
           className="view-hub-link"
@@ -176,11 +184,11 @@ return (
         </a>
 
         {/* Edit Profile if bio/social not set */}
-        {(!user.bio || !user.social?.facebook) && (
+        {(!user?.bio || !user.social?.facebook) && (
           <button
             className="edit-profile-btn"
             onClick={() => {
-              navigate("/edit-profile");
+              navigate("/profile");
               setShowCreatorHubModal(false);
             }}
           >

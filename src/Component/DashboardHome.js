@@ -9,6 +9,7 @@ import startOfMonth from "date-fns/startOfMonth";
 import endOfMonth from "date-fns/endOfMonth";
 import isWithinInterval from "date-fns/isWithinInterval";
 import parseISO from "date-fns/parseISO";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -20,7 +21,7 @@ const DashboardHome = ({setActiveTab}) => {
   const [showAlert, setShowAlert] = useState(true);
 const [showFeatureAlert, setShowFeatureAlert] = useState(true);
 
-
+  const navigate = useNavigate();
     const { content,loading,account,withdrawalsHistory} = useSelector((state) => state.auth)
   
 
@@ -122,7 +123,7 @@ const thisMonthUploads = useMemo(() => {
       <br />
       {(!user?.bio || !user?.social) && (
         <>
-          Please <a href="/edit-profile">update your bio and social media</a> to maximize visibility.
+           <p style={{cursor:'pointer', textDecoration:"underline"}} onClick={() => navigate("/profile")}> Please update your bio and social media with profile picture to maximize visibility , click on edit profile</p>
         </>
       )}
       <br />
