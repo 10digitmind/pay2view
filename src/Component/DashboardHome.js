@@ -104,11 +104,22 @@ const thisMonthUploads = useMemo(() => {
 )}
 
 {/* New Features Alert */}
+
 {showFeatureAlert && (
   <div className="alert-badge feature">
-    <span>
-   🎄 Merry Christmas and Happy New Year in advance ❤️!
+
+      <span>
+     🎄 Hello {user?.username}, we wish you a Merry Christmas and happy new year in advance ❤️!
     </span>
+
+    <button className="alert-close" onClick={() => setShowFeatureAlert(false)}>
+      ✕
+    </button>
+  </div>
+)}
+
+{showFeatureAlert && (
+  <div className="alert-badge feature">
 
       <span>
       🚀 New Feature: You can now upload up to **three 60-second videos** and earn even more!<a href="/uplaod-content"> Upload now !</a>
@@ -119,6 +130,7 @@ const thisMonthUploads = useMemo(() => {
     </button>
   </div>
 )}
+
 
 {showFeatureAlert && (
   <div className="alert-badge feature">
