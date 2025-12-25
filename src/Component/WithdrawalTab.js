@@ -40,7 +40,7 @@ const handleSubmit = async (e) => {
 
 
 if (form.amount < 1000) {
-  toast.error("The minimum withdrawal amount is ₦1000.");
+  toast.error("The minimum withdrawal amount is ₦1000. earn more to withdraw.");
   setLoading(false);
   return;
 }

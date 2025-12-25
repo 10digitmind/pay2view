@@ -107,6 +107,10 @@ const thisMonthUploads = useMemo(() => {
 {showFeatureAlert && (
   <div className="alert-badge feature">
     <span>
+   🎄 Merry Christmas and Happy New Year in advance ❤️!
+    </span>
+
+      <span>
       🚀 New Feature: You can now upload up to **three 60-second videos** and earn even more!<a href="/uplaod-content"> Upload now !</a>
     </span>
 
