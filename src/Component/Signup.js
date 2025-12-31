@@ -12,6 +12,7 @@ import { useDispatch } from "react-redux";
 import { createUser } from "../Redux/Asyncthunk";
 import { toast } from 'react-toastify';
 import { useNavigate } from "react-router-dom";
+import TelegramBotAd from "./TelegramBotAd";
 
 const SignUp = () => {
   const [showPassword, setShowPassword] = useState(false);
@@ -90,7 +91,7 @@ const [error, setError] = useState(null);
       <p className="signup-subtitle">
         <span className="highlight">Earn up to ₦100k/month</span>
       </p>
-
+<TelegramBotAd/>
       <div className="signup-container">
         <div className="input-group">
           <FaEnvelope className="input-icon" />

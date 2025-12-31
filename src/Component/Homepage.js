@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import '../Styles/Homepage.css'
 import { FaUpload, FaDollarSign, FaBolt,FaArrowAltCircleRight } from "react-icons/fa";
 import CountUp from "react-countup";
+import TelegramBotAd from './TelegramBotAd';
 
 const testimonials = [
   {
@@ -40,6 +41,7 @@ export default function Homepage() {
     <>
   <section className='hero-section'>
     <div>
+      <TelegramBotAd/>
         <p>🚀 Join 10,000+ Creators</p>
              <p>Turn Your Content Into Cash Instantly</p>
                   <p>Creators on Pay2View are already earning by sharing exclusive PHOTOS and PDF . Start monetizing your creativity today.</p>

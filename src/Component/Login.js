@@ -5,6 +5,7 @@ import { useDispatch} from "react-redux";
 import { toast } from "react-toastify";
 import { loginUser } from "../Redux/Asyncthunk";
 import { useNavigate } from "react-router-dom";
+import TelegramBotAd from "./TelegramBotAd";
 
 
 const Login = () => {
@@ -78,6 +79,9 @@ const handleLogin = async () => {
 
 
   return (
+    <>
+    
+    <TelegramBotAd/>
     <div className="login-page">
       <h2 className="login-title">Sign in to your Pay2View account</h2>
       <p className="login-subtitle">
@@ -139,6 +143,7 @@ const handleLogin = async () => {
         </div>
       </div>
     </div>
+    </>
   );
 };
 

@@ -7,6 +7,7 @@ import ContentTab from "./ContentTab";
 import EarningTab from "./EarningTab";
 import WithdrawalTab from "./WithdrawalTab";
 import ProfileTab from "./ProfileTab";
+import TelegramBotAd from "./TelegramBotAd";
 
 
 
@@ -28,6 +29,7 @@ const Dashboard = () => {
 
   return (
     <div className="dashboard-container">
+      <TelegramBotAd/>
       <div className="dashboard-nav">
         {tabs.map((tab) => (
           <div
