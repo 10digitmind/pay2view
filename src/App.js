@@ -30,6 +30,7 @@ import PrivacyPolicyPage from './Component/PrivacyPolicyPage';
 import CreatorHub from './Component/CreatorHub';
 import ProfileTab from './Component/ProfileTab';
 import ContentTab from './Component/ContentTab';
+import BioLinksPage from './Component/BioLinkPage';
 
 
 
@@ -75,6 +76,8 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />} />
              <Route path="/email-verification-sent/:email" element={<VerifyEmailPage />} />
      <Route path="/verify-email" element={<EmailVerificationLanding />} />
+        <Route path="/biolink" element={<BioLinksPage />} />
+     
       
    
         <Route path="/reset-password/:token" element={<ResetPassword />} />
