@@ -100,7 +100,7 @@ export const getUserContent = createAsyncThunk(
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(res)
+    
       return res.data.contents;
     } catch (error) {
       return thunkAPI.rejectWithValue(
