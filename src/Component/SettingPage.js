@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import React from "react";
+import api from '../utils/api';
 
 
 import '../Styles/setting.css'
@@ -39,7 +40,7 @@ const handleDelete = async () => {
 
   try {
     const token = localStorage.getItem("authToken");
-    const response = await axios.delete(`${API_URL}/delete-user-account/${userId}`, {
+    const response = await api.delete(`${API_URL}/delete-user-account/${userId}`, {
           headers: {
         Authorization: `Bearer ${token}`,
       },

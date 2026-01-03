@@ -1,6 +1,7 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { toast } from "react-toastify";
+import api from "../utils/api";
 
 const API_URL =process.env.REACT_APP_API_URL 
 
@@ -8,7 +9,7 @@ export const loginUser = createAsyncThunk(
   "auth/loginUser",
   async ({ email, password }, thunkAPI) => {
     try {
-      const res = await axios.post(`${API_URL}/login-user`, {
+      const res = await api.post(`${API_URL}/login-user`, {
         email,
         password,
       });
@@ -25,7 +26,7 @@ export const createUser = createAsyncThunk(
   "auth/createUser",
   async ({ email, password }, thunkAPI) => {
     try {
-      const res = await axios.post(`${API_URL}/register-user`, {
+      const res = await api.post(`${API_URL}/register-user`, {
         email,
         password,
       });
@@ -57,7 +58,7 @@ export const fetchContents = createAsyncThunk(
   "content/fetchContents",
   async (_, thunkAPI) => {
     try {
-      const res = await axios.get("/api/content");
+      const res = await api.get("/api/content");
       return res.data;
     } catch (error) {
       return thunkAPI.rejectWithValue(
@@ -73,7 +74,7 @@ export const getCurrentUser = createAsyncThunk(
     try {
       const token = localStorage.getItem("authToken"); // get token from localStorage
 
-      const res = await axios.get(`${API_URL}/get-user-profile`, {
+      const res = await api.get(`${API_URL}/get-user-profile`, {
         headers: {
           Authorization: `Bearer ${token}`, // add token to header
         },
@@ -94,11 +95,12 @@ export const getUserContent = createAsyncThunk(
     try {
       const token = localStorage.getItem("authToken"); // get token from localStorage
 
-        const res = await axios.get(`${API_URL}/get-user-content`, {
+        const res = await api.get(`${API_URL}/get-user-content`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
+      console.log(res)
       return res.data.contents;
     } catch (error) {
       return thunkAPI.rejectWithValue(
@@ -115,7 +117,7 @@ export const getUserAccount = createAsyncThunk(
     try {
       const token = localStorage.getItem("authToken"); // get token from localStorage
 
-        const res = await axios.get(`${API_URL}/get-user-account`, {
+        const res = await api.get(`${API_URL}/get-user-account`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -137,7 +139,7 @@ export const getWithdrawalHistory = createAsyncThunk(
     try {
       const token = localStorage.getItem("authToken"); 
 
-      const res = await axios.get(`${API_URL}/get-withdrawal-history`, {
+      const res = await api.get(`${API_URL}/get-withdrawal-history`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,

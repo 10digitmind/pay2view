@@ -4,6 +4,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import "../Styles/ResetPassword.css";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import api from "../utils/api";
 const API_URL =process.env.REACT_APP_API_URL 
 
 const ResetPassword = () => {
@@ -28,7 +29,7 @@ const ResetPassword = () => {
 
     try {
       setLoading(true);
-      const res = await axios.post(`${API_URL}/reset-password`, {
+      const res = await api.post(`${API_URL}/reset-password`, {
         token,
         password,
       });

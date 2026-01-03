@@ -3,6 +3,7 @@ import { FaEnvelope, FaPhone, FaMapMarkerAlt, FaPaperPlane } from "react-icons/f
 import axios from "axios";
 import { toast } from "react-toastify";
 import '../Styles/contact.css'
+import api from "../utils/api";
 
 const API_URL =process.env.REACT_APP_API_URL 
 const ContactPage = () => {
@@ -32,7 +33,7 @@ if (!formData ) {
 
     try {
       setLoading(true);
-      const res = await axios.post(`${API_URL}/contact`, formData);
+      const res = await api.post(`${API_URL}/contact`, formData);
 
       if (res.data.success) {
         toast.success("Message sent successfully!");

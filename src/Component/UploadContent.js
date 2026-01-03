@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { compressVideo } from "../utils/compressVideo";
 import imageCompression from "browser-image-compression";
+import api from "../utils/api";
 
 const API_URL =process.env.REACT_APP_API_URL 
 
@@ -161,7 +162,7 @@ setRemovebtn(false)
       setUploadProgress((prev) => (prev >= 90 ? 90 : prev + 1));
     }, 100);
 
-    const res = await axios.post(`${API_URL}/upload-content`, formData, {
+    const res = await api.post(`${API_URL}/upload-content`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${token}`,

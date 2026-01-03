@@ -4,6 +4,7 @@ import "../Styles/UnlockModal.css";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import api from "../utils/api";
 const API_URL =process.env.REACT_APP_API_URL 
 
 const UnlockModal = ({ isOpen, onClose, content }) => {
@@ -25,7 +26,7 @@ const handlePay = async () => {
   try {
     setLoading(true);
 
-    const res = await axios.post(`${API_URL}/pay-2-view`, {
+    const res = await api.post(`${API_URL}/pay-2-view`, {
       buyerEmail: email,
       contentId: content._id,
       platformFee: 0

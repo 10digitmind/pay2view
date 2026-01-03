@@ -7,6 +7,7 @@ import axios from 'axios';
 import { FaTwitter, FaInstagram, FaFacebook, FaSnapchat,FaTiktok } from "react-icons/fa";
 import { getCurrentUser } from '../Redux/Asyncthunk';
 import SettingsPage from './SettingPage';
+import api from '../utils/api';
 
 
 const API_URL =process.env.REACT_APP_API_URL 
@@ -122,7 +123,7 @@ const handleSocialChange = (e) => {
 
     const token = localStorage.getItem("authToken");
 
-    const res = await axios.post(`${API_URL}/update-user-profile`, data, {
+    const res = await api.post(`${API_URL}/update-user-profile`, data, {
       headers: {
         Authorization: `Bearer ${token}`,
         "Content-Type": "multipart/form-data",
@@ -164,7 +165,7 @@ const checkUsername = async (username) => {
 
     const token = localStorage.getItem("authToken");
 
-    const res = await axios.get(
+    const res = await api.get(
       `${API_URL}/check-username-availability?username=${username}`,
       {
         headers: {

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import '../Styles/PaymentVerification.css'
+import api from "../utils/api";
 
 const API_URL = process.env.REACT_APP_API_URL;
 
@@ -25,7 +26,7 @@ const PaymentVerification = () => {
     const verifyPayment = async () => {
       try {
         setLoading(true);
-        const res = await axios.post(`${API_URL}/verify-payment`, { reference });
+        const res = await api.post(`${API_URL}/verify-payment`, { reference });
 
         if (res.data.success) {
           setUnlockedContent(res.data);

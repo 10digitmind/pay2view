@@ -3,6 +3,7 @@ import { FaEnvelope} from "react-icons/fa";
 import { toast } from "react-toastify";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import api from "../utils/api";
 
 const API_URL =process.env.REACT_APP_API_URL 
 const VerifyEmailPage = () => {
@@ -16,7 +17,7 @@ const {email} =useParams()
       setResending(true);
       setTimer(60); // start 60 seconds countdown
 
-      await axios.post(`${API_URL}/resendverification-email`, { email: email });
+      await api.post(`${API_URL}/resendverification-email`, { email: email });
       toast.success("Verification email resent!");
     } catch (err) {
       toast.error(err.response?.data?.message || "Failed to resend email");

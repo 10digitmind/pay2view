@@ -5,11 +5,12 @@ import { FaTwitter, FaInstagram, FaFacebook, FaSnapchat,FaTiktok } from "react-i
 import { FaEye, FaEllipsisV, FaShieldAlt } from "react-icons/fa";
 import { FiUpload } from "react-icons/fi";
 import { useNavigate, useParams } from "react-router-dom";
-import { toast } from "react-toastify";
-import axios from "axios";
+
 import '../Styles/CreatorHub.css'
+import api from "../utils/api";
  import Hls from "hls.js";
 const API_URL =process.env.REACT_APP_API_URL 
+
 // Mock Data (replace with API fetch later)
 
 const CreatorHub = () => {
@@ -42,7 +43,7 @@ const navigate = useNavigate();
 useEffect(() => {
     const fetchCreator = async () => {
       try {
-        const res = await axios.get(`${API_URL}/get-user-by-username/${username}`);
+        const res = await api.get(`${API_URL}/get-user-by-username/${username}`);
       console.log('get',res)
         setCreator(res.data.creator);
         setContent(res.data.userContent);
@@ -54,10 +55,59 @@ useEffect(() => {
 
   };
 
-
-
     fetchCreator();
   }, [username]);
+
+
+
+useEffect(() => {
+  content.forEach((item) => {
+    if (isVideo(item) && !item.isPaid && item.snippetURL) {
+      const video = item.videoRef;
+      const canvas = item.canvasRef;
+      if (!video || !canvas) return;
+
+      const ctx = canvas.getContext("2d");
+      let animationFrame;
+
+      // -----------------------------
+      // HLS setup
+      // -----------------------------
+      if (Hls.isSupported()) {
+        const hls = new Hls();
+        hls.loadSource(item.snippetURL); // your snippet HLS URL
+        hls.attachMedia(video);
+        hls.on(Hls.Events.MANIFEST_PARSED, () => {
+          video.play().catch(() => {});
+        });
+      } else {
+        video.src = item.snippetURL;
+        video.play().catch(() => {});
+      }
+
+      // -----------------------------
+      // Draw blurred frames on canvas
+      // -----------------------------
+      const drawBlurredFrame = () => {
+        if (video.paused || video.ended) {
+          animationFrame = requestAnimationFrame(drawBlurredFrame);
+          return;
+        }
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        ctx.filter = "blur(90px)";
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        animationFrame = requestAnimationFrame(drawBlurredFrame);
+      };
+
+      video.addEventListener("play", drawBlurredFrame);
+
+      // cleanup
+      return () => cancelAnimationFrame(animationFrame);
+    }
+  });
+}, [content]);
+
 
 
 const pay2viewLink = (itemId,itemname) => {
@@ -175,7 +225,7 @@ const pay2viewLink = (itemId,itemname) => {
     filteredContent.map((item) => (
       <div key={item._id} className="pch-card">
         {/* MEDIA */}
-        <div className="pch-media">
+ <div className="pch-media">
   {isPDF(item) ? (
     item.preview_url ? (
       <img src={item.preview_url} alt={item.title} />
@@ -183,16 +233,56 @@ const pay2viewLink = (itemId,itemname) => {
       <div className="pch-processing">📄 PDF File</div>
     )
   ) : isVideo(item) ? (
-    <iframe
-       src={`https://iframe.videodelivery.net/${item.snippetURL}`}
-        title={`video-${item._id}`}
-      allow="autoplay; encrypted-media; picture-in-picture"
-      className="pch-video"
-    />
+    <div style={{ position: "relative" }}>
+      {/* Video */}
+      <video
+        ref={(el) => (item.videoRef = el)}
+        muted
+        controls={false}
+        className="pch-video"
+        style={{
+          width: "100%",
+          filter: item.isPaid ? "none" : "blur(30px)",
+          pointerEvents: "none",
+        }}
+      />
+
+      {/* Canvas for blur */}
+      {!item.isPaid && (
+        <canvas
+          ref={(el) => (item.canvasRef = el)}
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            pointerEvents: "none",
+          }}
+        />
+      )}
+
+      {/* Replay button for unpaid snippets */}
+      {!item.isPaid && (
+        <button
+          className="pch-replay-btn"
+          onClick={() => {
+            if (item.videoRef) {
+              item.videoRef.currentTime = 0;
+              item.videoRef.play().catch(() => {});
+            }
+          }}
+        >
+          Replay
+        </button>
+      )}
+    </div>
   ) : (
     <img src={item.preview_url} alt={item.title} />
   )}
 </div>
+
+
 
         {/* DETAILS */}
         <div className="pch-details">

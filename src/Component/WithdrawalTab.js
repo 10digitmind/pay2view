@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { getWithdrawalHistory } from '../Redux/Asyncthunk';
+import api from '../utils/api';
 
 
 const token = localStorage.getItem("authToken")
@@ -46,7 +47,7 @@ if (form.amount < 1000) {
 }
 
   try {
-    const response = await axios.post(
+    const response = await api.post(
       `${API_URL}/request-withdrawals`,
       {
         bankName: form.bankName,

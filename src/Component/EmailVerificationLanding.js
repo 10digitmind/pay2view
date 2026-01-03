@@ -5,6 +5,7 @@ import { toast } from "react-toastify";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { getCurrentUser } from "../Redux/Asyncthunk";
+import api from "../utils/api";
 
 const API_URL =process.env.REACT_APP_API_URL 
 
@@ -31,7 +32,7 @@ const dispatch = useDispatch()
     }
 
     try {
-      const res = await axios.get(`${API_URL}/verify-email?token=${token}`);
+      const res = await api.get(`${API_URL}/verify-email?token=${token}`);
       if (!mounted) return;
 
       setStatus("success");

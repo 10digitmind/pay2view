@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { FiUpload } from "react-icons/fi";
 import { removeContent } from "../Redux/AuthSlice";
 import { getCurrentUser, getUserAccount, getUserContent, getWithdrawalHistory } from "../Redux/Asyncthunk";
+import api from "../utils/api";
 
 const API_URL =process.env.REACT_APP_API_URL 
 
@@ -65,7 +66,7 @@ useEffect(() => {
 
   const pollVideos = async () => {
     try {
-      const res = await axios.post(`${API_URL}/check-video-status`, { videos: videosToCheck });
+      const res = await api.post(`${API_URL}/check-video-status`, { videos: videosToCheck });
 
       setVideoReadyMap(prev => {
         const updated = { ...prev };
@@ -113,7 +114,7 @@ setMenuOpen(null)
 
     if (result.isConfirmed) {
       try {
-        const res = await axios.delete(
+        const res = await api.delete(
           `${API_URL}/delete-content/${contentId}`,
           {
             headers: { Authorization: `Bearer ${token}` },
@@ -149,6 +150,7 @@ return (
       >
         + Upload New Content
       </button>
+
     </div>
 
 
