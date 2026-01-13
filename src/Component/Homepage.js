@@ -6,32 +6,34 @@ import TelegramBotAd from './TelegramBotAd';
 
 const testimonials = [
   {
-    name: "Adaobi Eze",
+    name: "Adaobi E.",
     job: "Photographer",
-    story: "I started sharing my exclusive photos with Pay2View and earned ₦50,000 in my first week!",
-    image: "https://plus.unsplash.com/premium_photo-1671748710978-2ff3ae35a64d?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8c2V4eSUyMGJsYWNrJTIwZ2lybHxlbnwwfHwwfHx8MA%3D%3D",
+    story: "Pay2View made it easy to charge for my photos without building a full website.",
+    image: "https://plus.unsplash.com/premium_photo-1671748710978-2ff3ae35a64d?w=900&auto=format&fit=crop&q=60",
   },
   {
-    name: "Tunde Balogun",
+    name: "Tunde B.",
     job: "Digital Artist",
-    story: "Pay2View helped me monetize my digital art instantly without any hassle.",
-    image: "https://images.unsplash.com/photo-1484517186945-df8151a1a871?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NTl8fGJsYWNrJTIwbWFufGVufDB8fDB8fHww",
+    story: "I use Pay2View as a simple payment and access tool for my digital art.",
+    image: "https://images.unsplash.com/photo-1484517186945-df8151a1a871?w=900&auto=format&fit=crop&q=60",
   },
   {
-    name: "Chiamaka Okafor",
+    name: "Chiamaka O.",
     job: "Content Creator",
-    story: "I never thought sharing picture online could be this rewarding!",
-    image: "https://images.unsplash.com/photo-1647338064700-21f154b6720e?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8c2V4eSUyMGJsYWNrJTIwZ2lybHxlbnwwfHwwfHx8MA%3D%3D",
+    story: "Pay2View helps me share paid content with my audience without technical setup.",
+    image: "https://images.unsplash.com/photo-1647338064700-21f154b6720e?w=900&auto=format&fit=crop&q=60",
   },
 ];
 
 
 
-   const stats = [
-    { label: "Active Creators", value: 10000, suffix: "+" },
-    { label: "Paid to Creators", value: 25000000, prefix: "₦", suffix: "+" },
-    { label: "Content Sold", value: 50000, suffix: "+" },
-  ];
+
+ const stats = [
+  { label: "Setup Time", value:3, suffix: " Minutes" },
+  { label: "Steps to Sell", value: 3 },
+  { label: "Monthly Fees", value: 0, suffix: "%" },
+];
+
 
 export default function Homepage() {
      useEffect(() => {
@@ -42,15 +44,16 @@ export default function Homepage() {
   <section className='hero-section'>
     <div>
       <TelegramBotAd/>
-        <p>🚀 Join 10,000+ Creators</p>
-             <p>Turn Your Content Into Cash Instantly</p>
-                  <p>Creators on Pay2View are already earning by sharing exclusive PHOTOS and PDF . Start monetizing your creativity today.</p>
+        <p>🚀 A Simple Tool for Selling Digital Content</p>
+             <p>Turn your photos, Videos and PDFs into paid content in minutes</p>
+                  <p>Pay2View gives you the tools to upload content, collect payments, and deliver access  all in one place</p>
                  
     </div>
     <div>
-        <a href='getstarted'><button>Start Earning Now  →  </button></a>
+        <a href='getstarted'><button>Create Your Pay2View Link →  </button></a>
     </div>
-     <p>No monthly fees • Instant payouts • Secure payments</p>
+     <p>No monthly fees • Fast payouts • Payments handled securely</p>
+
 
   </section>
     <div className="home-stats-container">
@@ -71,27 +74,31 @@ export default function Homepage() {
           <p className="stat-label">{s.label}</p>
         </div>
       ))}
+      <p>Pay2View is a payment tool, not a marketplace. You bring your audience — we handle payments and access.</p>
     </div>
- <section className="how-it-works">
-      <h2>How It Works</h2>
-      <div className="steps">
-        <div className="step">
-          <div className="icon"><FaUpload /></div>
-          <h3>Upload Content</h3>
-          <p>Upload your premium photos, videos, or digital art to your profile.</p>
-        </div>
-        <div className="step">
-          <div className="icon"><FaDollarSign /></div>
-          <h3>Set Your Price</h3>
-          <p>Choose how much buyers pay to unlock your exclusive content and share your link .</p>
-        </div>
-        <div className="step">
-          <div className="icon"><FaBolt /></div>
-          <h3>Get Paid Instantly</h3>
-          <p>Receive payments instantly when buyers unlock your content.</p>
-        </div>
-      </div>
-    </section>
+<section className="how-it-works">
+  <h2>How It Works</h2>
+  <div className="steps">
+    <div className="step">
+      <div className="icon"><FaUpload /></div>
+      <h3>Upload Content</h3>
+      <p>Upload your photos,Videos and  PDFs and control who can access them.</p>
+    </div>
+
+    <div className="step">
+      <div className="icon"><FaDollarSign /></div>
+      <h3>Set a Price</h3>
+      <p>Choose how much people pay to unlock your content and generate a shareable link.</p>
+    </div>
+
+    <div className="step">
+      <div className="icon"><FaBolt /></div>
+      <h3>Share & Get Paid</h3>
+      <p>Share your Pay2View link with your audience. Payments and access are handled automatically.</p>
+    </div>
+  </div>
+</section>
+
 
     <section className="success-stories">
       <h2>Success Stories</h2>
@@ -109,12 +116,13 @@ export default function Homepage() {
   <section className='earning-section'>
     <div>
         
-             <p>Ready to start earning ?</p>
-                  <p>Join thousands of creators who are already making money from their content.</p>
+             <p>Ready to set up paid content?</p>
+<p>Create your link, share it with your audience, and get paid.</p>
+
                  
     </div>
     <div>
-       <a href='getstarted'> <button>Start Earning Now → </button></a>
+       <a href='getstarted'> <button>Create Your Pay2View Link → </button></a>
     </div>
      <p>Already have a account <a href='login'> <span> Log In</span> </a></p>
 

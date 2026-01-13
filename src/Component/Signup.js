@@ -87,9 +87,9 @@ const [error, setError] = useState(null);
   const strength = getPasswordStrength(password);
   return (
     <div className="signup-page">
-      <h2 className="signup-title">Start Your Creator Journey</h2>
+      <h2 className="signup-title">Start Selling Your Content</h2>
       <p className="signup-subtitle">
-        <span className="highlight">Earn up to ₦100k/month</span>
+        <span className="highlight">Set up paid access for your photos ,videos and PDFs in minutes.</span>
       </p>
 <TelegramBotAd/>
       <div className="signup-container">
@@ -129,20 +129,22 @@ const [error, setError] = useState(null);
           Already have an account? <Link to="/login">Login</Link>
         </p>
         {/* Creator Benefits */}
-        <div className="creator-benefits">
-          <h4>Creator Benefits:</h4>
-          <p>
-            <FaCheckCircle className="check-icon" /> Instant payouts via bank
-            transfer
-          </p>
-          <p>
-            <FaCheckCircle className="check-icon" /> No monthly subscription
-            fees
-          </p>
-          <p>
-            <FaCheckCircle className="check-icon" /> Keep 90% of your earnings
-          </p>
-        </div>
+       <div className="creator-benefits">
+  <h4>Creator Benefits</h4>
+
+  <p>
+    <FaCheckCircle className="check-icon" /> Fast payouts to your bank account
+  </p>
+
+  <p>
+    <FaCheckCircle className="check-icon" /> No monthly subscription fees
+  </p>
+
+  <p>
+    <FaCheckCircle className="check-icon" /> Transparent fees — you keep 90%
+  </p>
+</div>
+
 
         {/* Agreement */}
         <p className="agreement">
