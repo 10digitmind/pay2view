@@ -93,7 +93,10 @@ const thisMonthUploads = useMemo(() => {
       {loading ? (
         <p>Loading your alert...</p>
       ) : (
-        <p>🔔 You've sold {thisMonthSoldCount} content this month worth ₦{thisMonthEarnings.toLocaleString()}</p>
+       <p>
+🔔 This month: {thisMonthSoldCount} content unlocks • ₦ {thisMonthEarnings.toLocaleString()} collected
+</p>
+
       )}
     </span>
 
@@ -122,7 +125,7 @@ const thisMonthUploads = useMemo(() => {
   <div className="alert-badge feature">
 
       <span>
-      🚀 New Feature: You can now upload up to **three 60-second videos** and earn even more!<a href="/uplaod-content"> Upload now !</a>
+   🚀 New Feature: You can now upload up to 3 short videos (60s max) to your content.<a href="/uplaod-content"> Upload now !</a>
     </span>
 
     <button className="alert-close" onClick={() => setShowFeatureAlert(false)}>
@@ -185,7 +188,7 @@ const thisMonthUploads = useMemo(() => {
         <div className="stat-card">
           <FaFileAlt color="green" className="stat-icon" />
         {loading?<h3>Loading ...</h3>:<h3>{account?.soldContent ? account.soldContent.length : 0}</h3>}
-          <p>Content Sold</p>
+          <p>Content unlocked</p>
           <small  style={{color:"green"}}>+{thisMonthSoldCount.toLocaleString()}  this month</small>
         </div>
 
