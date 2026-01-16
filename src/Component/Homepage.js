@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import '../Styles/Homepage.css'
-import { FaUpload, FaDollarSign, FaBolt,FaArrowAltCircleRight } from "react-icons/fa";
+import { FaUpload, FaDollarSign, FaBolt } from "react-icons/fa";
 import CountUp from "react-countup";
 import TelegramBotAd from './TelegramBotAd';
 

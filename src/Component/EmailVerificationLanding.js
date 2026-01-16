@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { FaEnvelope, FaCheckCircle } from "react-icons/fa";
 import { toast } from "react-toastify";
-import axios from "axios";
 import { useDispatch } from "react-redux";
 import { getCurrentUser } from "../Redux/Asyncthunk";
 import api from "../utils/api";

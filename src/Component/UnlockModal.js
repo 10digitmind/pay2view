@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { FaCreditCard, FaTimes } from "react-icons/fa";
 import "../Styles/UnlockModal.css";
 import { toast } from "react-toastify";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import api from "../utils/api";
 const API_URL =process.env.REACT_APP_API_URL 

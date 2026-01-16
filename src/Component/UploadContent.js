@@ -5,8 +5,6 @@ import "../Styles/UploadContent.css";
 import { getCurrentUser } from "../Redux/Asyncthunk";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
-import { compressVideo } from "../utils/compressVideo";
 import imageCompression from "browser-image-compression";
 import api from "../utils/api";
 

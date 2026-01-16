@@ -1,7 +1,6 @@
 import React, {  } from 'react'
 import { useState } from 'react';
 import '../Styles/Withdrawal.css'
-import axios from 'axios'; 
 import { toast } from 'react-toastify';
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';

@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import { FaEnvelope} from "react-icons/fa";
 import { toast } from "react-toastify";
-import axios from "axios";
 import { useParams } from "react-router-dom";
 import api from "../utils/api";
 

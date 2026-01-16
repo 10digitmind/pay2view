@@ -1,6 +1,5 @@
 import { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import axios from "axios";
 import { toast } from "react-toastify";
 import "../Styles/ResetPassword.css";
 import { FaEye, FaEyeSlash } from "react-icons/fa";

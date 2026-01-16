@@ -3,8 +3,7 @@ import { useState,useEffect } from 'react';
 import '../Styles/Profile.css'
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import axios from 'axios';
-import { FaTwitter, FaInstagram, FaFacebook, FaSnapchat,FaTiktok } from "react-icons/fa";
+import { FaInstagram, FaFacebook, FaSnapchat,FaTiktok } from "react-icons/fa";
 import { getCurrentUser } from '../Redux/Asyncthunk';
 import SettingsPage from './SettingPage';
 import api from '../utils/api';

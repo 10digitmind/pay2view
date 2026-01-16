@@ -1,9 +1,8 @@
-import { useState,useEffect,useRef } from "react";
+import { useState,useEffect } from "react";
 import React  from "react";
 import "../Styles/CreatorHub.css";
 import { FaTwitter, FaInstagram, FaFacebook, FaSnapchat,FaTiktok } from "react-icons/fa";
-import { FaEye, FaEllipsisV, FaShieldAlt } from "react-icons/fa";
-import { FiUpload } from "react-icons/fi";
+import { FaEye, FaShieldAlt } from "react-icons/fa";
 import { useNavigate, useParams } from "react-router-dom";
 
 import '../Styles/CreatorHub.css'

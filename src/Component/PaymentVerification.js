@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
-import axios from "axios";
 import '../Styles/PaymentVerification.css'
 import api from "../utils/api";
 
