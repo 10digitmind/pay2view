@@ -1,13 +1,30 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import "../Styles/ForgotPassword.css"; // styling separately
 import { Link } from "react-router-dom";
-import { AiOutlineMail } from "react-icons/ai";
 
+import api from "../utils/api";
+
+const COOLDOWN_TIME = 60; // seconds
+
+const API_URL =process.env.REACT_APP_API_URL 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+   const [loading, setLoading] = useState(false);
+     const [cooldown, setCooldown] = useState(0);
 
-  const handleSubmit = (e) => {
+  useEffect(() => {
+    if (cooldown === 0) return;
+
+    const timer = setInterval(() => {
+      setCooldown((prev) => prev - 1);
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [cooldown]);
+
+
+const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!email) {
@@ -15,14 +32,29 @@ const ForgotPassword = () => {
       return;
     }
 
-    // Call your backend API here
-    // Example:
-    // axios.post('/api/forgot-password', { email })
-    //      .then(res => setMessage(res.data.message))
-    //      .catch(err => setMessage(err.response.data.error))
+    if (cooldown > 0) return;
 
-    setMessage("If this email exists, a reset link has been sent.");
+    try {
+      setLoading(true);
+
+      const res = await api.post(`${API_URL}/send-reset-password`, { email });
+
+      setMessage(
+        res.data.message ||
+          "If this email exists, a reset link has been sent."
+      );
+
+      setCooldown(COOLDOWN_TIME); // ⏳ start cooldown
+    } catch (err) {
+      setMessage(
+        err?.response?.data?.message ||
+          "If this email exists, a reset link has been sent."
+      );
+    } finally {
+      setLoading(false);
+    }
   };
+
 
   return (
     <div className="forgot-container">
@@ -33,7 +65,7 @@ const ForgotPassword = () => {
 
       <form className="forgot-form" onSubmit={handleSubmit}>
         <div className="input-group">
-          <AiOutlineMail className="icon" />
+ 
           <input
             type="email"
             placeholder="Email Address"
@@ -43,9 +75,18 @@ const ForgotPassword = () => {
           />
         </div>
 
-        <button type="submit" className="forgot-btn">
-          Send Reset Link
-        </button>
+      <button
+  disabled={loading || cooldown > 0}
+  type="submit"
+  className="forgot-btn"
+>
+  {cooldown > 0
+    ? `Wait ${cooldown}s`
+    : loading
+    ? "Sending..."
+    : "Send Reset Link"}
+</button>
+
       </form>
 
       {message && <p className="message">{message}</p>}
