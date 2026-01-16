@@ -13,7 +13,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
   const [loading, setLoading]= useState(false)
-  const [error, setError] = useState(null);
+  
 
   const togglePassword = () => setShowPassword(!showPassword);
 
@@ -33,7 +33,7 @@ const handleLogin = async () => {
   }
 
   setLoading(true);
-  setError(null);
+
 
 
 
@@ -70,7 +70,7 @@ const handleLogin = async () => {
       typeof error === "string" ? error : error?.message || "Login failed. Please try again."
     );
   }
-  setError(error);
+
 } finally {
     setLoading(false);
   }

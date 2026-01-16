@@ -17,7 +17,6 @@ import {
 } from "react-icons/fa";
 
 import { useSelector } from 'react-redux';
-import axios from 'axios';
 import { toast } from 'react-toastify';
 
 const API_URL =process.env.REACT_APP_API_URL 

@@ -82,6 +82,7 @@ useEffect(() => {
     } catch (error) {
       console.error("Polling error:", error);
       setTimeout(pollVideos, 5000);
+      setLoading(false)
     }
   };
 

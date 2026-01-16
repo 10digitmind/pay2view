@@ -23,7 +23,7 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
 const [loading, setLoading] = useState(false);
-const [error, setError] = useState(null);
+
 
 
   const togglePassword = () => setShowPassword(!showPassword);
@@ -52,7 +52,7 @@ const [error, setError] = useState(null);
   }
 
   setLoading(true);
-  setError(null);
+
 
   try {
     // Optional: handle network timeout
@@ -77,7 +77,7 @@ const [error, setError] = useState(null);
     } else {
       toast.error(err?.message || "Sign-up failed. Please try again.");
     }
-    setError(err);
+
   } finally {
     setLoading(false);
   }

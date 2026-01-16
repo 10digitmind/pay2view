@@ -61,7 +61,7 @@ const dispatch = useDispatch()
   return () => {
     mounted = false;
   };
-}, [location.search, navigate]);
+}, [location.search, navigate,query, dispatch]);
 
 
   return (

@@ -212,7 +212,7 @@ useEffect(() => {
     return;
   }
   checkUsername(debouncedUsername);
-}, [debouncedUsername]);
+}, [debouncedUsername,user?.username]);
 
 
 
@@ -226,7 +226,7 @@ useEffect(() => {
 
 
   return () => clearTimeout(timer);
-}, [form.username, editMode]);
+}, [form.username, editMode,usernameStatus]);
 
 
 

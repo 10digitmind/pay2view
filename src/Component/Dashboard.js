@@ -1,6 +1,6 @@
 // Dashboard.js
 import React, { useState } from "react";
-import { FaTachometerAlt, FaFolder, FaMoneyBill, FaWallet, FaUser,FaCog } from "react-icons/fa";
+import { FaTachometerAlt, FaFolder, FaMoneyBill, FaWallet, FaUser } from "react-icons/fa";
 import "../Styles/Dashboard.css";
 import DashboardHome from "./DashboardHome";
 import ContentTab from "./ContentTab";

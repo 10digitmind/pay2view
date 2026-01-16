@@ -37,7 +37,7 @@ const isVideo = (item) => item?.preview_url.includes("videodelivery.net");
 });
 // track ready state per video
 
-const navigate = useNavigate();
+
 
 useEffect(() => {
     const fetchCreator = async () => {
