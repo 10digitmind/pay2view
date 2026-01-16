@@ -1,6 +1,6 @@
 // src/redux/slices/authSlice.js
 import { createSlice,} from '@reduxjs/toolkit';
-import { loginUser,createUser,getCurrentUser,getUserContent,getUserAccount,getWithdrawalHistory } from '../Redux/Asyncthunk';
+import { loginUser,getCurrentUser,getUserContent,getUserAccount,getWithdrawalHistory } from '../Redux/Asyncthunk';
 
 
 // Login API call

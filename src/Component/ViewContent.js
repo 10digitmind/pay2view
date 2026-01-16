@@ -1,12 +1,12 @@
 import React, { useEffect, useState,useRef } from "react";
 import { useParams } from "react-router-dom";
-import axios from "axios";
+
 import { FaLock, FaShieldAlt, FaCheckCircle } from "react-icons/fa";
-import { toast } from "react-toastify";
+
 import "../Styles/ViewContent.css";
 import UnlockModal from "./UnlockModal";
  import Hls from "hls.js";
-import { FiCornerDownLeft } from "react-icons/fi";
+
 import api from "../utils/api";
 
 const API_URL =process.env.REACT_APP_API_URL 
