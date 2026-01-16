@@ -7,6 +7,7 @@ import api from "../utils/api";
 const COOLDOWN_TIME = 60; // seconds
 
 const API_URL =process.env.REACT_APP_API_URL 
+
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
