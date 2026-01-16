@@ -3,7 +3,7 @@ import React  from "react";
 import "../Styles/CreatorHub.css";
 import { FaTwitter, FaInstagram, FaFacebook, FaSnapchat,FaTiktok } from "react-icons/fa";
 import { FaEye, FaShieldAlt } from "react-icons/fa";
-import { useNavigate, useParams } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 
 import '../Styles/CreatorHub.css'
 import api from "../utils/api";

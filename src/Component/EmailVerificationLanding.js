@@ -10,95 +10,81 @@ const API_URL =process.env.REACT_APP_API_URL
 
 
 const EmailVerificationLanding = () => {
-  const [status, setStatus] = useState("loading"); // loading | success | error
+  const [status, setStatus] = useState("loading");
   const [message, setMessage] = useState("");
+
   const navigate = useNavigate();
   const location = useLocation();
-const dispatch = useDispatch()
-  // Helper to get token from URL
-    const query = new URLSearchParams(useLocation().search);
-  // Call verify-email API
+  const dispatch = useDispatch();
+
   useEffect(() => {
-  let mounted = true;
-  const verifyEmail = async () => {
-    const token = decodeURIComponent(query.get("token")?.trim());
+    let mounted = true;
 
-    if (!token) {
-      if (!mounted) return;
-      setStatus("error");
-      setMessage("Invalid verification link.");
-      return;
-    }
+    const verifyEmail = async () => {
+      const query = new URLSearchParams(location.search);
+      const token = decodeURIComponent(query.get("token")?.trim());
 
-    try {
-      const res = await api.get(`${API_URL}/verify-email?token=${token}`);
-      if (!mounted) return;
-
-      setStatus("success");
-      setMessage(res.data.message);
-      toast.success(res.data.message);
-      await dispatch(getCurrentUser());
-
-      if (res.data.token) {
-        localStorage.setItem("authToken", res.data.token);
-        const now = Date.now();
-        const expiresAt = now + 24 * 60 * 60 * 1000;
-        localStorage.setItem("expiresAt", expiresAt);
+      if (!token) {
+        if (!mounted) return;
+        setStatus("error");
+        setMessage("Invalid verification link.");
+        return;
       }
 
-      setTimeout(() => navigate("/dashboard"), 3000);
-    } catch (err) {
-      if (!mounted) return;
-      const errMsg = err.response?.data?.message || err.message || "Verification failed.";
-      setStatus("error");
-      setMessage(errMsg);
-      toast.error(errMsg);
-    }
-  };
+      try {
+        const res = await api.get(`${API_URL}/verify-email?token=${token}`);
 
-  verifyEmail();
+        if (!mounted) return;
 
-  return () => {
-    mounted = false;
-  };
-}, [location.search, navigate,query, dispatch]);
+        setStatus("success");
+        setMessage(res.data.message);
+        toast.success(res.data.message);
 
+        await dispatch(getCurrentUser());
+
+        if (res.data.token) {
+          localStorage.setItem("authToken", res.data.token);
+          const expiresAt = Date.now() + 24 * 60 * 60 * 1000;
+          localStorage.setItem("expiresAt", expiresAt);
+        }
+
+        setTimeout(() => navigate("/dashboard"), 3000);
+      } catch (err) {
+        if (!mounted) return;
+
+        const errMsg =
+          err.response?.data?.message ||
+          err.message ||
+          "Verification failed.";
+
+        setStatus("error");
+        setMessage(errMsg);
+        toast.error(errMsg);
+      }
+    };
+
+    verifyEmail();
+
+    return () => {
+      mounted = false;
+    };
+  }, [location.search, dispatch, navigate]);
 
   return (
-    <div
-      style={{
-        minHeight: "100vh",
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        backgroundColor: "#ffffffff",
-        fontFamily: "Arial, sans-serif",
-        padding: "20px"
-      }}
-    >
-      <div
-        style={{
-          maxWidth: "500px",
-          width: "100%",
-          backgroundColor: "#ffffff",
-          borderRadius: "10px",
-          boxShadow: "0 4px 12px rgba(0,0,0,0.1)",
-          padding: "40px 30px",
-          textAlign: "center"
-        }}
-      >
-        <FaEnvelope size={50} color="#000" style={{ marginBottom: "20px" }} />
+    <div style={{ minHeight: "100vh", display: "flex", justifyContent: "center", alignItems: "center" }}>
+      <div style={{ maxWidth: "500px", width: "100%", padding: "40px", textAlign: "center" }}>
+        <FaEnvelope size={50} />
 
-        <h2 style={{ fontSize: "22px", fontWeight: "bold", marginBottom: "10px" }}>
+        <h2>
           {status === "success" ? "Email Verified!" : "Verify Your Email"}
         </h2>
 
-        <p style={{ color: "#666", marginBottom: "30px" }}>{message}</p>
+        <p>{message}</p>
 
         {status === "success" && (
           <>
-            <FaCheckCircle size={40} color="#000" style={{ marginBottom: "20px" }} />
-            <p style={{ marginTop: "20px", color: "#333" }}>Redirecting to your dashboard...</p>
+            <FaCheckCircle size={40} />
+            <p>Redirecting to your dashboard...</p>
           </>
         )}
 
@@ -111,5 +97,6 @@ const dispatch = useDispatch()
     </div>
   );
 };
+
 
 export default EmailVerificationLanding;
