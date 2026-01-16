@@ -26,35 +26,41 @@ const ForgotPassword = () => {
 
 
 const handleSubmit = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    if (!email) {
-      setMessage("Please enter your email");
-      return;
+  if (!email) {
+    setMessage("Please enter your email");
+    return;
+  }
+
+  if (cooldown > 0) return;
+
+  try {
+    setLoading(true);
+
+    const res = await api.post(`${API_URL}/send-reset-password`, { email });
+
+    // Always show generic message for security
+    setMessage(res.data.message || "If this email exists, a reset link has been sent.");
+
+    // Start cooldown only after successful request
+    setCooldown(COOLDOWN_TIME);
+  } catch (err) {
+    console.log(err);
+
+    // Show specific error if backend allows it
+    if (err.response?.data?.error === "No account found with this email.") {
+      setMessage("No account found with this email.");
+    } else {
+      setMessage("If this email exists, a reset link has been sent.");
     }
+  } finally {
+    setLoading(false);
+  }
+};
 
-    if (cooldown > 0) return;
 
-    try {
-      setLoading(true);
 
-      const res = await api.post(`${API_URL}/send-reset-password`, { email });
-
-      setMessage(
-        res.data.message ||
-          "If this email exists, a reset link has been sent."
-      );
-
-      setCooldown(COOLDOWN_TIME); // ⏳ start cooldown
-    } catch (err) {
-      setMessage(
-        err?.response?.data?.message ||
-          "If this email exists, a reset link has been sent."
-      );
-    } finally {
-      setLoading(false);
-    }
-  };
 
 
   return (
