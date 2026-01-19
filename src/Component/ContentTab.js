@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from "react";
-import { FaEye, FaEllipsisV, FaShieldAlt } from "react-icons/fa";
+import { FaEye, FaEllipsisV, FaShieldAlt,FaMousePointer,FaDollarSign } from "react-icons/fa";
 import "../Styles/ContentTab.css";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -41,6 +41,7 @@ const isVideo = (item) => {
     dispatch(getUserContent());
     dispatch(getUserAccount())
     dispatch(getWithdrawalHistory())
+  
   }
 }, [token, dispatch]);
 
@@ -275,10 +276,18 @@ return (
     <h3>{item.title}</h3>
     <p className="price">₦{item.price.toLocaleString()}</p>
     <div className="stats-content">
-      <span>
-        <FaEye /> {item.viewCount || 0}
-      </span>
-      <span>Sold: {item.soldCount || 0}</span>
+       <span className="tooltip" style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+          <FaEye /> {item.viewCount || 0} Views
+           <span className="tooltip-text">Total number of people who viewed this content</span>
+        </span>
+        <span className="tooltip" style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+          <FaMousePointer /> {item.clickCount || 0} Clicks
+           <span className="tooltip-text">Total number of people who clicked on this content link</span>
+        </span>
+        <span className="tooltip" style={{ display: "flex", alignItems: "center", gap: "6px" }}>
+          <FaDollarSign /> {item.salesCount || 0} Paid
+           <span className="tooltip-text">Total number of people who paid to view  this content</span>
+        </span>
     </div>
     <p style={{ fontSize: "13px", textTransform: "capitalize" }}>
       {item.description}

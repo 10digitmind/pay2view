@@ -108,18 +108,7 @@ const thisMonthUploads = useMemo(() => {
 
 {/* New Features Alert */}
 
-{showFeatureAlert && (
-  <div className="alert-badge feature">
 
-      <span>
-     🎄🎄 Hello {user?.username || "there"}, We made it, thanks for being part of this family. HAPPY NEW YEAR ❤️!
-    </span>
-
-    <button className="alert-close" onClick={() => setShowFeatureAlert(false)}>
-      ✕
-    </button>
-  </div>
-)}
 
 {showFeatureAlert && (
   <div className="alert-badge feature">
