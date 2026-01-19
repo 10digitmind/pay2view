@@ -222,11 +222,11 @@ useEffect(() => {
   const timer = setTimeout(() => {
     checkUsername(form.username);
   }, 500);
-  console.log("usernameStatus:", usernameStatus);
+ 
 
 
   return () => clearTimeout(timer);
-}, [form.username, editMode,usernameStatus]);
+}, [form.username, editMode]);
 
 
 
