@@ -9,19 +9,19 @@ import startOfMonth from "date-fns/startOfMonth";
 import endOfMonth from "date-fns/endOfMonth";
 import isWithinInterval from "date-fns/isWithinInterval";
 import parseISO from "date-fns/parseISO";
-import { useNavigate } from "react-router-dom";
+
 
 
 
 const DashboardHome = ({setActiveTab}) => {
   const dispatch = useDispatch()
   const token = localStorage.getItem('authToken')
-  const { user } = useSelector((state) => state.auth);
+
 
   const [showAlert, setShowAlert] = useState(true);
 const [showFeatureAlert, setShowFeatureAlert] = useState(true);
 
-  const navigate = useNavigate();
+
     const { content,loading,account,withdrawalsHistory} = useSelector((state) => state.auth)
   
 
