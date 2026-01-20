@@ -114,7 +114,7 @@ const thisMonthUploads = useMemo(() => {
   <div className="alert-badge feature">
 
       <span>
-   🚀 New Feature: You can now upload up to 3 short videos (60s max) to your content.<a href="/uplaod-content"> Upload now !</a>
+   🚀🚀 New Feature Alert!See detailed views, clicks, and sales on your content — hover over the icons for explanations<a href="/content"> check content !</a>
     </span>
 
     <button className="alert-close" onClick={() => setShowFeatureAlert(false)}>
@@ -122,29 +122,6 @@ const thisMonthUploads = useMemo(() => {
     </button>
   </div>
 )}
-
-
-{showFeatureAlert && (
-  <div className="alert-badge feature">
-    <span>
-      🚀 New Feature: You can now share **all your content at once** along with your social media links and bio!
-      <br />
-      {(!user?.bio || !user?.social) && (
-        <>
-           <p style={{cursor:'pointer', textDecoration:"underline"}} onClick={() => navigate("/profile")}> Please update your bio and social media with profile picture to maximize visibility , click on edit profile</p>
-        </>
-      )}
-      <br />
-<a href={`/creator/${user?.username}`}>See your Hub</a> to view and share everything easily!
-
-    </span>
-
-    <button className="alert-close" onClick={() => setShowFeatureAlert(false)}>
-      ✕
-    </button>
-  </div>
-)}
-
 
 
      {/* Balance Section */}

@@ -188,10 +188,16 @@
 }
 
 .alert-badge.feature {
-  background: #e7f5ff;
-  border-left: 5px solid #339af0;
-}
+  background: #174201;        /* dark green */
+  border-left: 5px solid #339af0; /* bright blue */
+  color: white;
 
+
+}
+.alert-badge.feature a{
+  color: #ffdd57;
+  font-weight: bold;
+}
 .alert-close {
   background: transparent;
   border: none;
