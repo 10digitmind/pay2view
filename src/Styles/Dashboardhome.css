@@ -211,3 +211,64 @@
 .alert-close:hover {
   color: black;
 }
+.install-banner {
+  background: linear-gradient(135deg, #111, #1a1a1a);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 16px 18px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.6);
+}
+
+.install-content {
+  display: flex;
+  gap: 14px;
+}
+
+.install-icon {
+  font-size: 28px;
+  line-height: 1;
+}
+
+.install-text h4 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.install-text p {
+  margin: 6px 0 10px;
+  font-size: 13px;
+  color: #ccc;
+  line-height: 1.5;
+}
+
+.install-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  font-size: 12px;
+  color: #aaa;
+}
+
+.install-steps strong {
+  color: #fff;
+  font-weight: 600;
+}
+
+.install-close {
+  background: transparent;
+  border: none;
+  color: #888;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.install-close:hover {
+  color: #fff;
+}

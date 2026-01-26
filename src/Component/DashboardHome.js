@@ -111,13 +111,28 @@ const thisMonthUploads = useMemo(() => {
 
 
 {showFeatureAlert && (
-  <div className="alert-badge feature">
+  <div className="install-banner">
+    <div className="install-content">
+      <div className="install-icon">📲</div>
 
-      <span>
-   🚀🚀 New Feature Alert!See detailed views, clicks, and sales on your content — hover over the icons for explanations<a href="/content"> check content !</a>
-    </span>
+      <div className="install-text">
+        <h4>Install Pay2View</h4>
+        <p>
+          Use Pay2View like a real app — faster access, no app store needed.
+        </p>
 
-    <button className="alert-close" onClick={() => setShowFeatureAlert(false)}>
+        <div className="install-steps">
+          <span>🍎 iPhone: <strong>Safari → Share → Add to Home Screen</strong></span>
+          <span>🤖 Android: <strong>Chrome → ⋮ → Add to Home Screen</strong></span>
+        </div>
+      </div>
+    </div>
+
+    <button
+      className="install-close"
+      onClick={() => setShowFeatureAlert(false)}
+      aria-label="Close"
+    >
       ✕
     </button>
   </div>
